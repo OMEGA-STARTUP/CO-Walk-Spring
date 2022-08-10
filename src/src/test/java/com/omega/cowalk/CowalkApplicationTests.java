@@ -1,21 +1,27 @@
 package com.omega.cowalk;
 
-import com.omega.cowalk.domain.CowalkUser;
+import com.omega.cowalk.domain.dto.CowalkUserDto;
+import com.omega.cowalk.domain.entity.CowalkUser;
+import com.omega.cowalk.domain.entity.Role;
 import com.omega.cowalk.repository.CowalkUserRepository;
-import com.omega.cowalk.security.CowalkUserDetails;
-import com.omega.cowalk.security.UserManager;
-import com.omega.cowalk.security.UserPasswordAuthenticationProvider;
 import com.omega.cowalk.security.UserPasswordDetailsService;
+import com.omega.cowalk.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.Optional;
+import java.util.Set;
 
 @SpringBootTest
 @Slf4j
@@ -35,10 +41,15 @@ class CowalkApplicationTests {
     void testUserRepository()
     {
         String encodedPassword = passwordEncoder.encode("Insukkim!6810");
-        CowalkUser cowalkUser = new CowalkUser( "harryjung0330", encodedPassword, "harryjung0330@gmail.com",
-        "안녕", "ROLE_USER");
+        CowalkUser cowalkUser1 = CowalkUser.builder()
+                .identifier("harry!")
+                .password(encodedPassword)
+                .email("biggie")
+                .nickname("geet")
+                .role(Role.ROLE_USER)
+                .build();
 
-        CowalkUser created = cowalkUserRepository.save(cowalkUser);
+        CowalkUser created = cowalkUserRepository.save(cowalkUser1);
 
         log.info(created.toString());
     }
@@ -60,67 +71,86 @@ class CowalkApplicationTests {
     }
 
     @Autowired
-    UserPasswordAuthenticationProvider userPasswordAuthenticationProvider;
+    AuthenticationManager authenticationManager;
+
 
     @Test
-    void testUserPasswordAuthenticationProvider(){
-        try{
-            Authentication authentication = new UsernamePasswordAuthenticationToken("harryjung0330", "Insukkim!6810");
+    void testAuthenticationManager(){
+        try {
+            Authentication preAuth = new UsernamePasswordAuthenticationToken("harryjung0330", "Insukkim!6810");
+            Authentication postAuth = authenticationManager.authenticate(preAuth);
 
-            Authentication postAuthentication = userPasswordAuthenticationProvider.authenticate(authentication);
 
-            log.info(postAuthentication.getName());
-            log.info(postAuthentication.getAuthorities().toString());
-
-            CowalkUserDetails cowalkUserDetails = null;
-
-            if(postAuthentication.getDetails() instanceof CowalkUserDetails)
-            {
-                cowalkUserDetails = (CowalkUserDetails) postAuthentication.getDetails();
-                log.info(cowalkUserDetails.toString());
-            }
-            else{
-                log.info("problem with details of Authentication");
-                log.info(postAuthentication.getDetails().toString());
-            }
+            log.info(postAuth.getName());
+            log.info(postAuth.getPrincipal().toString());
         }
         catch(Exception e)
         {
             log.error(e.toString());
         }
+
+    }
+
+    @Test
+    void testCowalkUserDto(){
+
+        try{
+            Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+            CowalkUserDto cowalkUserDto = new CowalkUserDto(
+                    0, "helloee1111", "bassgi111", "sjung12@gmail.com", "hello",
+                    Role.ROLE_USER, "htt", null
+            );
+
+            Set<ConstraintViolation<CowalkUserDto>> violations = validator.validate(cowalkUserDto);
+
+
+            log.info(String.valueOf(violations.size()));
+
+
+            log.info(cowalkUserDto.toString());
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+        }
+
+
     }
 
     @Autowired
-    UserManager userManager;
+    UserService userService;
 
     @Test
-    void testUserManagerAuthentication()
-    {
-        try {
-            Authentication preAuth = new UsernamePasswordAuthenticationToken("harryjung030", "Inukkim!6810");
-            Authentication postAuth = userManager.authenticate(preAuth);
-
-            log.info(postAuth.toString());
-            log.info(postAuth.getDetails().toString());
-        }
-        catch(Exception e)
-        {
-            log.error(e.toString());
-        }
-
-    }
-
-    @Test
-    void testUserManagerCreateUser()
-    {
+    void testUserService(){
         try{
-            CowalkUser cowalkUser = new CowalkUser("biggie", "6810", "sjung112@gmail.com",
-                    "라면만", CowalkUser.ROLE_USER );
-            userManager.createUser(cowalkUser);
+            Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+            CowalkUserDto cowalkUserDto = new CowalkUserDto(
+                    0, "helloee1111", "bassgi111", "sjung12@gmail.com", "hello",
+                    Role.ROLE_USER, null, null
+            );
+
+            Set<ConstraintViolation<CowalkUserDto>> violations = validator.validate(cowalkUserDto);
+
+
+            log.info(String.valueOf(violations.size()));
+
+            if(violations.size()  == 0)
+            {
+                Optional<CowalkUser> cowalkUser = userService.createUser(cowalkUserDto);
+                log.info(cowalkUser.get().toString());
+            }
+
+            log.info(cowalkUserDto.toString());
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             log.error(e.toString());
         }
     }
+
+
+
+
 }

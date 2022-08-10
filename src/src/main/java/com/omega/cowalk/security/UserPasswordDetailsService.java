@@ -1,7 +1,6 @@
 package com.omega.cowalk.security;
 
-import com.omega.cowalk.domain.CowalkUser;
-import com.omega.cowalk.repository.CowalkUserRepository;
+import com.omega.cowalk.domain.entity.CowalkUser;
 import com.omega.cowalk.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +22,13 @@ public class UserPasswordDetailsService implements UserDetailsService {
         CowalkUser user = null;
 
         try{
-            user = userService.findByIdentifier(username);
+            user = userService.findByIdentifier(username).orElseThrow(
+                    () -> new UsernameNotFoundException("username "+ username + " not found!")
+            );
 
         }catch(Exception e)
         {
             log.error("error occurred while getting user: " + e.toString());
-        }
-
-        if(user == null)
-        {
-            throw new UsernameNotFoundException("username "+ username + " not found!");
         }
 
         return new CowalkUserDetails(user);

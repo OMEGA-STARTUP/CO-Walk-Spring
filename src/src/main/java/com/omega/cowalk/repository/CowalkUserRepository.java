@@ -1,6 +1,6 @@
 package com.omega.cowalk.repository;
 
-import com.omega.cowalk.domain.CowalkUser;
+import com.omega.cowalk.domain.entity.CowalkUser;
 import org.springframework.data.repository.CrudRepository;
 
 

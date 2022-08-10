@@ -1,6 +1,6 @@
 package com.omega.cowalk.security;
 
-import com.omega.cowalk.domain.CowalkUser;
+import com.omega.cowalk.domain.entity.CowalkUser;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -33,7 +33,7 @@ public class CowalkUserDetails implements UserDetails {
         this.password = cowalkUser.getPassword();
         this.identifier = cowalkUser.getIdentifier();
         this.role = new ArrayList<SimpleGrantedAuthority>();
-        role.add(new SimpleGrantedAuthority(cowalkUser.getRole()));
+        role.add(new SimpleGrantedAuthority(cowalkUser.getRole().toString()));
     }
 
     @Override
