@@ -1,20 +1,14 @@
 package com.omega.cowalk.domain.dto;
 
-import com.omega.cowalk.domain.entity.Role;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.*;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CowalkUserDto {
-
-    private long user_id;
+public class CreateUserDto {
 
     @NotNull(message = "identifier should not be null")
     @Size(min = 8, max = 20, message = "length of password not appropriate")
@@ -33,7 +27,6 @@ public class CowalkUserDto {
     @NotNull(message = "nickname should not be null!")
     private String nickname;
 
-    private Role role;
 
     @Pattern(regexp = "http.*", message = "url should start with the word http")
     private String sound_background_img_url;

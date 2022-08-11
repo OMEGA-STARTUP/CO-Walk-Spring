@@ -1,6 +1,6 @@
 package com.omega.cowalk;
 
-import com.omega.cowalk.domain.dto.CowalkUserDto;
+import com.omega.cowalk.domain.dto.CreateUserDto;
 import com.omega.cowalk.domain.entity.CowalkUser;
 import com.omega.cowalk.domain.entity.Role;
 import com.omega.cowalk.repository.CowalkUserRepository;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -97,12 +96,12 @@ class CowalkApplicationTests {
         try{
             Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-            CowalkUserDto cowalkUserDto = new CowalkUserDto(
+            CreateUserDto cowalkUserDto = new CreateUserDto(
                     0, "helloee1111", "bassgi111", "sjung12@gmail.com", "hello",
-                    Role.ROLE_USER, "htt", null
+                    "htt", null
             );
 
-            Set<ConstraintViolation<CowalkUserDto>> violations = validator.validate(cowalkUserDto);
+            Set<ConstraintViolation<CreateUserDto>> violations = validator.validate(cowalkUserDto);
 
 
             log.info(String.valueOf(violations.size()));
@@ -126,12 +125,12 @@ class CowalkApplicationTests {
         try{
             Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-            CowalkUserDto cowalkUserDto = new CowalkUserDto(
+            CreateUserDto cowalkUserDto = new CreateUserDto(
                     0, "helloee1111", "bassgi111", "sjung12@gmail.com", "hello",
-                    Role.ROLE_USER, null, null
+                    null, null
             );
 
-            Set<ConstraintViolation<CowalkUserDto>> violations = validator.validate(cowalkUserDto);
+            Set<ConstraintViolation<CreateUserDto>> violations = validator.validate(cowalkUserDto);
 
 
             log.info(String.valueOf(violations.size()));

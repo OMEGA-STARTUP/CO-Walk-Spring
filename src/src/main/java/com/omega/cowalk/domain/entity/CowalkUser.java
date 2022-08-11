@@ -40,5 +40,5 @@ public class CowalkUser
 
     @Column(name = "profile_img_url")
     private final String profile_img_url;
-    
+
 }
