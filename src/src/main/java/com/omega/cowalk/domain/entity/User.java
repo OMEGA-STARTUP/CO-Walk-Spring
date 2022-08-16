@@ -1,6 +1,7 @@
 package com.omega.cowalk.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 
@@ -40,5 +41,10 @@ public class User
 
     @Column(name = "profile_img_url")
     private final String profileImgUrl;
+
+    //유저의 보유 소리수
+    @Formula("(select COUNT(*) from playlist where user_id=user_id)")
+    private final int sound_numb;
+
 
 }
