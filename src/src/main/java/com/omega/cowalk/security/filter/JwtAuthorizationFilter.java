@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,9 +25,6 @@ import java.io.IOException;
 
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
-
-    @Value("${cloud.aws.credentials.secret-key}")
-    private String SECRET_KEY;
 
     private final UserRepository userRepository;
     private final TokenService tokenService;
@@ -41,7 +39,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.debug("인증이나 권한이 필요한 요청");
-        String identifier = tokenService.verifyToken(request.getHeader(JwtTokenProperties.HEADER_ACCESS_KEY), SECRET_KEY);
+        String identifier = tokenService.verifyToken(request.getHeader(JwtTokenProperties.HEADER_ACCESS_KEY), tokenService.getSECRET_KEY());
 
         User user = userRepository.findByIdentifier(identifier)
                 .orElseThrow(() -> new UsernameNotFoundException("Not found username"));

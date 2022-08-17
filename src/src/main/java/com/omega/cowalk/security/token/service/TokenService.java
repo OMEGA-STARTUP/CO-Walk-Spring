@@ -31,6 +31,14 @@ public class TokenService {
     private final TokenCreator jwtTokenCreator;
     private final TokenExtractor jwtHeaderTokenExtractor;
 
+    public String getSECRET_KEY() {
+        return SECRET_KEY;
+    }
+
+    public String getREFRESH_KEY() {
+        return REFRESH_KEY;
+    }
+
     public String verifyToken(String jwtTokenHeader, String keyType) throws JWTVerificationException {
         // Header 검증
         String jwtToken = verifyHeader(jwtTokenHeader);

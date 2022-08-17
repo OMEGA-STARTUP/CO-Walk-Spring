@@ -3,6 +3,7 @@ package com.omega.cowalk.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.omega.cowalk.security.auth.PrincipalUserDetails;
 import com.omega.cowalk.security.token.JwtTokenProperties;
+import com.omega.cowalk.security.token.dto.JwtTokenIssueDto;
 import com.omega.cowalk.security.token.service.TokenService;
 import com.omega.cowalk.util.SuccessResult;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +33,12 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         PrincipalUserDetails principalUserDetails = (PrincipalUserDetails) authentication.getPrincipal();
         Map<String, String> jwtTokenStore = tokenService.issue(principalUserDetails);
 
-        response.addHeader(JwtTokenProperties.HEADER_ACCESS_KEY, jwtTokenStore.get(JwtTokenProperties.HEADER_ACCESS_KEY));
-        response.addHeader(JwtTokenProperties.HEADER_REFRESH_KEY, jwtTokenStore.get(JwtTokenProperties.HEADER_REFRESH_KEY));
+        JwtTokenIssueDto jwtTokenIssueDto =
+                new JwtTokenIssueDto(jwtTokenStore.get(JwtTokenProperties.HEADER_ACCESS_KEY), jwtTokenStore.get(JwtTokenProperties.HEADER_REFRESH_KEY));
 
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        objectMapper.writeValue(response.getWriter(), new SuccessResult(HttpStatus.OK.value(), "인증 성공"));
+        objectMapper.writeValue(response.getWriter(), new SuccessResult(HttpStatus.OK.value(), "인증 성공", jwtTokenIssueDto));
     }
 }
