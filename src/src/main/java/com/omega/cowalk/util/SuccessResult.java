@@ -11,5 +11,5 @@ public class SuccessResult {
 
     private final int code;
     private final String message;
-    private Object object;
+    private Object body;
 }
