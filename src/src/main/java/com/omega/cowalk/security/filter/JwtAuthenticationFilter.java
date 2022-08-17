@@ -6,6 +6,7 @@ import com.omega.cowalk.security.exceptions.AuthenticationNotSupportedException;
 import com.omega.cowalk.security.token.JwtAuthenticationToken;
 import com.omega.cowalk.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,9 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    @Autowired
+    private IgnorePathFilterRules ignorePathFilterUtil;
+
     public JwtAuthenticationFilter() {
         super(new AntPathRequestMatcher("/user/login", HttpMethod.POST.name()));
     }
@@ -30,7 +34,8 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException {
-        log.debug("사용자 인증 시도");
+
+        log.info("사용자 인증 시도");
 
         // Http Method & Request Header 검증
         if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isContentTypeJson(request)) {
@@ -52,4 +57,8 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         // AuthenticationManager 에게 인증 위임
         return this.getAuthenticationManager().authenticate(token);
     }
+
+
+
+
 }

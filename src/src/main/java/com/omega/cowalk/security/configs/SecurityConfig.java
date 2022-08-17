@@ -2,17 +2,16 @@ package com.omega.cowalk.security.configs;
 
 import com.omega.cowalk.domain.entity.Role;
 import com.omega.cowalk.repository.UserRepository;
+import com.omega.cowalk.security.filter.IgnorePathFilterRules;
 import com.omega.cowalk.security.filter.JwtAuthorizationExceptionFilter;
 import com.omega.cowalk.security.filter.JwtAuthorizationFilter;
 import com.omega.cowalk.security.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,6 +32,7 @@ public class SecurityConfig {
     private final AuthenticationFailureHandler jwtAuthenticationFailureHandler;
     private final UserRepository userRepository;
     private final TokenService tokenService;
+    private final IgnorePathFilterRules ignorePathFilterUtil;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -59,16 +59,21 @@ public class SecurityConfig {
     }
 
     // 정적 리소스 접근제한
+    //사용 안하는것을 추천. ignoring에서 설정한 path가 매칭이 되면, path를 /login으로 바꿈
+    /*
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+        return (web) -> web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
+
+     */
 
     public class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity>{
         @Override
         public void configure(HttpSecurity http) throws Exception {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-            http.addFilterBefore(new JwtAuthorizationFilter(authenticationManager, userRepository, tokenService), UsernamePasswordAuthenticationFilter.class);
+            http.addFilterBefore(new JwtAuthorizationFilter(authenticationManager, userRepository, tokenService, ignorePathFilterUtil), UsernamePasswordAuthenticationFilter.class);
             http.addFilterBefore(new JwtAuthorizationExceptionFilter(), JwtAuthorizationFilter.class);
         }
     }

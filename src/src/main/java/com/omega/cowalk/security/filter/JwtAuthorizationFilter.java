@@ -8,14 +8,12 @@ import com.omega.cowalk.security.token.JwtTokenProperties;
 import com.omega.cowalk.security.token.service.TokenService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,16 +27,32 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private final UserRepository userRepository;
     private final TokenService tokenService;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, TokenService tokenService) {
+
+    private final IgnorePathFilterRules ignorePathFilterUtil;
+
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository,
+                                  TokenService tokenService, IgnorePathFilterRules ignorePathFilterUtil) {
         super(authenticationManager);
         this.userRepository = userRepository;
         this.tokenService = tokenService;
+        this.ignorePathFilterUtil = ignorePathFilterUtil;
     }
+
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request)
+    {
+        //ignorePathFilterUtil을 사용해서 필터링을 해야하는지 안해야하는지 정함.
+        return ignorePathFilterUtil.shouldNotFilter(this.getClass(), request);
+    }
+
+
+
 
     @SneakyThrows
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.debug("인증이나 권한이 필요한 요청");
+        log.info("인증이나 권한이 필요한 요청: " + request.getRequestURI() );
         String identifier = tokenService.verifyToken(request.getHeader(JwtTokenProperties.HEADER_ACCESS_KEY), tokenService.getSECRET_KEY());
 
         User user = userRepository.findByIdentifier(identifier)
@@ -54,4 +68,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         chain.doFilter(request, response);
     }
+
+
+
 }
