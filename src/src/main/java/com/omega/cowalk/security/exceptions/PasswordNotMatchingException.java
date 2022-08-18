@@ -1,4 +1,4 @@
-package com.omega.cowalk.security.execptions;
+package com.omega.cowalk.security.exceptions;
 
 import org.springframework.security.core.AuthenticationException;
 

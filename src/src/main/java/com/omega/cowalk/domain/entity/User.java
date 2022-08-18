@@ -1,6 +1,7 @@
 package com.omega.cowalk.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 
@@ -11,12 +12,12 @@ import javax.persistence.*;
 @ToString
 @Table(name="users")
 @Builder
-public class CowalkUser
+public class User
 {
     @Id
     @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long user_id;
+    private Long id;
 
     @Column(name = "identifier")
     private final String identifier;
@@ -33,12 +34,17 @@ public class CowalkUser
     @Column(name = "role")
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private final Role role = Role.ROLE_USER;
+    private final Role role = Role.USER;
 
     @Column(name = "sound_background_img_url")
-    private final String sound_background_img_url;
+    private final String soundBackgroundImgUrl;
 
     @Column(name = "profile_img_url")
-    private final String profile_img_url;
+    private final String profileImgUrl;
+
+    //유저의 보유 소리수
+    @Formula("(select COUNT(*) from playlist where user_id=user_id)")
+    private final int sound_numb;
+
 
 }

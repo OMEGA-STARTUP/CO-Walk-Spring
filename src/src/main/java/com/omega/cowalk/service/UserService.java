@@ -1,49 +1,47 @@
 package com.omega.cowalk.service;
 
-import com.omega.cowalk.domain.dto.CreateUserDto;
-import com.omega.cowalk.domain.entity.CowalkUser;
-import com.omega.cowalk.repository.CowalkUserRepository;
+import com.omega.cowalk.domain.dto.RegisterRequestDto;
+import com.omega.cowalk.domain.entity.User;
+import com.omega.cowalk.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Service
 @Slf4j
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    CowalkUserRepository cowalkUserRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Optional<CowalkUser> createUser(CreateUserDto cowalkUserDto){
-        CowalkUser cowalkUser = CowalkUser.builder()
-                .identifier(cowalkUserDto.getIdentifier())
-                .password(passwordEncoder.encode(cowalkUserDto.getPassword()))
-                .email(cowalkUserDto.getEmail())
-                .nickname(cowalkUserDto.getNickname())
-                .profile_img_url(cowalkUserDto.getProfile_img_url())
-                .sound_background_img_url(cowalkUserDto.getSound_background_img_url())
+    public Optional<User> createUser(RegisterRequestDto registerRequestDto){
+        User user = User.builder()
+                .identifier(registerRequestDto.getIdentifier())
+                .password(passwordEncoder.encode(registerRequestDto.getPassword()))
+                .email(registerRequestDto.getEmail())
+                .nickname(registerRequestDto.getNickname())
+                .profileImgUrl(registerRequestDto.getProfile_img_url())
+                .soundBackgroundImgUrl(registerRequestDto.getSound_background_img_url())
                 .build();
 
-        return Optional.of(cowalkUserRepository.save(cowalkUser));
+        return Optional.of(userRepository.save(user));
     }
 
-    public Optional<CowalkUser> findByIdentifier(String identifier)
-    {
-        return Optional.of(cowalkUserRepository.findByIdentifier(identifier));
+    public Optional<User> findByIdentifier(String identifier) {
+        return userRepository.findByIdentifier(identifier);
     }
 
     @Transactional
-    public void deleteUser(CowalkUser cowalkUser)
+    public void deleteUser(User user)
     {
-        cowalkUserRepository.delete(cowalkUser);
+        userRepository.delete(user);
     }
 
 

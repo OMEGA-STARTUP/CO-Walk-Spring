@@ -8,10 +8,10 @@ import javax.validation.constraints.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserDto {
+public class RegisterRequestDto {
 
     @NotNull(message = "identifier should not be null")
-    @Size(min = 8, max = 20, message = "length of password not appropriate")
+    @Size(min = 8, max = 20, message = "length of identifier not appropriate")
     @Pattern(regexp = "[A-Za-z0-9]+", message = "password should be in english and number")
     private String identifier;
 
