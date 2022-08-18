@@ -24,9 +24,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Autowired
-    private IgnorePathFilterRules ignorePathFilterUtil;
-
     public JwtAuthenticationFilter() {
         super(new AntPathRequestMatcher("/user/login", HttpMethod.POST.name()));
     }
@@ -57,8 +54,4 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         // AuthenticationManager 에게 인증 위임
         return this.getAuthenticationManager().authenticate(token);
     }
-
-
-
-
 }

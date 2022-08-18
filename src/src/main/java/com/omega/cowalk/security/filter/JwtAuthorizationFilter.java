@@ -26,8 +26,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final UserRepository userRepository;
     private final TokenService tokenService;
-
-
     private final IgnorePathFilterRules ignorePathFilterUtil;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository,
@@ -38,16 +36,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         this.ignorePathFilterUtil = ignorePathFilterUtil;
     }
 
-
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request)
     {
         //ignorePathFilterUtil을 사용해서 필터링을 해야하는지 안해야하는지 정함.
         return ignorePathFilterUtil.shouldNotFilter(this.getClass(), request);
     }
-
-
-
 
     @SneakyThrows
     @Override
@@ -68,7 +62,4 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         chain.doFilter(request, response);
     }
-
-
-
 }

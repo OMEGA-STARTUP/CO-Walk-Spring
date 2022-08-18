@@ -8,9 +8,6 @@ import com.omega.cowalk.util.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,13 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @Component
 @Slf4j
 public class JwtAuthorizationExceptionFilter extends OncePerRequestFilter {
 
-    List<AntPathRequestMatcher> ignoredPaths = List.of(new AntPathRequestMatcher("/re-issue"));
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -48,7 +43,6 @@ public class JwtAuthorizationExceptionFilter extends OncePerRequestFilter {
         }
 
     }
-
 
     public void setErrorResponse(HttpStatus status, HttpServletResponse response, String errorMessage) throws IOException {
         response.setStatus(status.value());
