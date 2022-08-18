@@ -47,16 +47,5 @@ public class TokenController {
     }
 
 
-/*
-    @GetMapping("/re-issue")
-    public ResponseEntity<String> reIssueAccessToken(
-            @RequestHeader(name = "REFRESH_TOKEN") String jwtTokenHeader) throws JWTVerificationException {
-        log.info("request reached to the controller");
 
-
-
-        return ResponseEntity.ok().body("hello");
-    }
-
- */
 }

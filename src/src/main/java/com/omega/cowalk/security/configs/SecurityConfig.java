@@ -58,16 +58,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 정적 리소스 접근제한
-    //사용 안하는것을 추천. ignoring에서 설정한 path가 매칭이 되면, path를 /login으로 바꿈
-    /*
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
-
-     */
 
     public class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity>{
         @Override
