@@ -81,7 +81,7 @@ public class UserController
         String token = registerRequestDto.getJwt_token();
         tokenService.verifySignUpEmailCheckCodeToken(token , registerRequestDto.getEmail());
 
-        if(!userService.isNotDuplicateIdentifier(registerRequestDto.getNickname()))
+        if(!userService.isNotDuplicateNickname(registerRequestDto.getNickname()))
         {
             throw new NicknameDuplicationException(registerRequestDto.getNickname() + " is a duplicate nickname");
         }
@@ -89,6 +89,11 @@ public class UserController
         if(!userService.isNotDuplicateIdentifier(registerRequestDto.getIdentifier()))
         {
             throw new IdentifierDuplicateException(registerRequestDto.getIdentifier() + " is a duplicate identifier");
+        }
+
+        if(!userService.isNotDuplicateEmail(registerRequestDto.getEmail()))
+        {
+            throw new NicknameDuplicationException(registerRequestDto.getEmail() + " is a duplicate email");
         }
 
         userService.createUser(registerRequestDto);

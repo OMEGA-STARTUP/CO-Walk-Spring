@@ -2,6 +2,7 @@ package com.omega.cowalk.controller.exception_handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.omega.cowalk.domain.ExceptionResult;
+import com.omega.cowalk.exception.EmailDuplicateException;
 import com.omega.cowalk.exception.IdentifierDuplicateException;
 import com.omega.cowalk.exception.NicknameDuplicationException;
 import com.omega.cowalk.security.exceptions.InvalidAccessCodeException;
@@ -67,15 +68,15 @@ public class CustomizedResposneEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity(exceptionResult, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({NicknameDuplicationException.class, IdentifierDuplicateException.class})
-    public final ResponseEntity<Object> handleNicknameDuplicationException(Exception ex, WebRequest request)
+    @ExceptionHandler({NicknameDuplicationException.class, IdentifierDuplicateException.class, EmailDuplicateException.class})
+    public final ResponseEntity<Object> handleDuplicationException(Exception ex, WebRequest request)
     {
         log.debug("handleJwtVerificationException is called");
 
         ExceptionResult exceptionResult = new ExceptionResult(
                 ex.getMessage(),
                 new Date(),
-                "it is a duplicate nickname"
+                "it has duplicate value in the field"
         );
 
         return new ResponseEntity(exceptionResult, HttpStatus.PRECONDITION_FAILED);

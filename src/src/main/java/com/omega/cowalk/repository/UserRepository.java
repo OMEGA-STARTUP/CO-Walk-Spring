@@ -15,4 +15,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT CASE WHEN (COUNT(*) >= 1) THEN false ELSE true END FROM User u WHERE u.identifier = ?1")
     public boolean isNotDuplicateIdentifier(String identifier);
+
+    @Query("SELECT CASE WHEN (COUNT(*) >= 1) THEN false ELSE true END FROM User u WHERE u.email = ?1")
+    public boolean isNotDuplicateEmail(String email);
 }

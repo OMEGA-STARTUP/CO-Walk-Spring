@@ -52,6 +52,11 @@ public class UserService {
         return userRepository.isNotDuplicateIdentifier(identifier);
     }
 
+    public boolean isNotDuplicateEmail(String email)
+    {
+        return userRepository.isNotDuplicateIdentifier(email);
+    }
+
 
 
 }
