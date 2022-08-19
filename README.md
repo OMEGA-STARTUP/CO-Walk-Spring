@@ -12,7 +12,7 @@
 | 데이터베이스 | PostgreSQL (Release 14.4) |
 | 버전 관리 | Github, Git |
 | 배포 및 운영 | AWS, Docker, Github Actions  |
-| 오픈소스 및 외부 라이브러리 | 미정 |
+| 오픈소스 및 외부 라이브러리 | JSON Web Token API, Jasypt |
 
 
 ## 🛠 세부 기술 스택(Tech Stack)
@@ -40,17 +40,21 @@
 
 - 추가 예정
 
-## 📝 도메인 모델 분석(Domain Model Analysis)
+## 📝 기능 정의서(Functional Details)
 
-추가 예정
+[기능 정의서](./README_files/functional_specification.docx)
 
 ## 📝 테이블 정의서(Entity Details)
 
-추가 예정
+[테이블 정의서](./README_files/table_specification.xlsx)
 
 ## 🔗 엔티티-관계 모델(Entity Relationship Diagram)
 
-추가 예정
+![ERD](./README_files/ERD.png)
+
+## 📌 API 명세서(API Specification)
+
+[API 명세서](https://app.swaggerhub.com/apis/CokeLee777/CO-Walk/1.0.0)
 
 ## 📐 트러블 슈팅(Trouble Shooting)
 
