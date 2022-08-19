@@ -47,18 +47,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("인증이나 권한이 필요한 요청: " + request.getRequestURI() );
-        String identifier = tokenService.verifyToken(request.getHeader(JwtTokenProperties.HEADER_ACCESS_KEY), tokenService.getSECRET_KEY());
-
-        User user = userRepository.findByIdentifier(identifier)
-                .orElseThrow(() -> new UsernameNotFoundException("Not found username"));
-
-        PrincipalUserDetails principalDetails = new PrincipalUserDetails(user);
-        //Authentication 객체를 만들어 준다.
-        Authentication authentication = new JwtAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
-
-        //강제로 시큐리티의 세션에 접근하여 Authentication 객체를 저장
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authentication);
+        tokenService.verifyToken(request.getHeader(JwtTokenProperties.HEADER_ACCESS_KEY), tokenService.getSECRET_KEY());
 
         chain.doFilter(request, response);
     }
