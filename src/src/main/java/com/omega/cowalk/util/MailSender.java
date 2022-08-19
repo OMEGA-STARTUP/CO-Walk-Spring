@@ -11,10 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
 
 @Component
 @Slf4j
+@EnableAsync
 public class MailSender
 {
     private static final String SENDER = "SUPPORT@cowalknow.com";
@@ -36,17 +40,28 @@ public class MailSender
 
 
     @Async
-    public void sendMailForSignup(String recipient, String code)
+    public CompletableFuture<Boolean> sendMailForSignup(String recipient, String code)
     {
+        log.debug("sendMailForSignUp called!");
+
         String htmlBody = String.format(HTMP_TEMPLATE_SIGNUP, code);
 
-        sendMail(recipient, SIGNUP_SUBJECT, htmlBody, null);
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<Boolean>();
+
+        boolean result = false;
+
+        result = sendMail(recipient, SIGNUP_SUBJECT, htmlBody, null);
+
+        completableFuture.complete(result);
+
+        return completableFuture;
     }
 
 
-    private void sendMail(String recipient, String subject, String htmlBody, String textBody )
+    private boolean sendMail(String recipient, String subject, String htmlBody, String textBody )
     {
 
+        log.info("sendMail called!");
         Body body = new Body();
         if(htmlBody != null)
         {
@@ -60,6 +75,7 @@ public class MailSender
                     .withCharset("UTF-8").withData(textBody));
         }
 
+
         SendEmailRequest request = new SendEmailRequest()
                 .withDestination(
                         new Destination().withToAddresses(recipient))
@@ -69,7 +85,13 @@ public class MailSender
                                 .withCharset("UTF-8").withData(subject)))
                 .withSource(SENDER);
 
-        client.sendEmail(request);
+        log.debug("right before send email");
+        SendEmailResult sendEmailResult = client.sendEmail(request);
+
+        log.debug(sendEmailResult.toString());
+
+        //execption이 없으면 true를 리턴하게 함
+        return true;
     }
 
 

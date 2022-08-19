@@ -32,7 +32,7 @@ public class TokenController {
     @GetMapping("/re-issue")
     public ResponseEntity<SuccessResult> reIssueAccessToken(
             @RequestHeader(name = "REFRESH_TOKEN") String jwtTokenHeader) throws JWTVerificationException {
-        log.info("request reached to the controller");
+        log.debug("request reached to the controller");
 
         String identifier = tokenService.verifyToken(jwtTokenHeader, tokenService.getREFRESH_KEY());
 

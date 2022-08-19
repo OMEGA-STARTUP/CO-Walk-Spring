@@ -20,4 +20,30 @@ public class JwtTokenCreator implements TokenCreator {
                 .withClaim("role", principalUserDetails.getUser().getRole().toString())
                 .sign(Algorithm.HMAC512(key));
     }
+
+
+
+    public String createTokenForSignUpSendRequest(String email, String access_code, String key, long expiredTime)
+    {
+        return JWT.create()
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + expiredTime))
+                .withClaim("email", email)
+                .withClaim("purpose_code", 0)
+                .withClaim("access_code", access_code)
+                .withClaim("isVerified", false)
+                .sign(Algorithm.HMAC512(key));
+    }
+
+     public String createTokenForCheckSignUpCode(String email, String key, long expiredTime)
+     {
+         return JWT.create()
+                 .withIssuedAt(new Date())
+                 .withExpiresAt(new Date(System.currentTimeMillis() + expiredTime))
+                 .withClaim("email", email)
+                 .withClaim("purpose_code", 0)
+                 .withClaim("isVerified", true)
+                 .sign(Algorithm.HMAC512(key));
+     }
+
 }

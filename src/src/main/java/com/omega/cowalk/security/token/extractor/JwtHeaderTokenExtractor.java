@@ -24,4 +24,5 @@ public class JwtHeaderTokenExtractor implements TokenExtractor{
 
         return jwtTokenHeader.substring(JwtTokenProperties.HEADER_PREFIX.length());
     }
+
 }
