@@ -8,13 +8,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AttendancePrimaryKey implements Serializable
 {
-    private java.sql.Date attend_date;
+    private java.sql.Date attendDate;
 
-    private long user_id;
+    private long userId;
 
     public AttendancePrimaryKey(java.sql.Date attend_date, long user_id)
     {
-        this.attend_date = attend_date;
-        this.user_id = user_id;
+        this.attendDate = attend_date;
+        this.userId = user_id;
     }
 }

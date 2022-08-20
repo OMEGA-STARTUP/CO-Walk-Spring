@@ -17,16 +17,16 @@ public class AudioSoundPlaylist
 {
     @Id
     @Column(name = "audio_book_title")
-    private final String audio_book_title;
+    private final String audioBookTitle;
 
     @Id
     @Column(name="user_id")
-    private final long user_id;
+    private final long userId;
 
     @Id
     @Column(name="sound_id")
-    private long sound_id;
+    private long soundId;
 
     @Column(name="order_numb")
-    private int order_numb;
+    private int orderNumb;
 }

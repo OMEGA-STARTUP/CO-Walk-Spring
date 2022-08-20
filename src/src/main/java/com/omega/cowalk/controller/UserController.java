@@ -8,7 +8,6 @@ import com.omega.cowalk.service.UserService;
 import com.omega.cowalk.util.MailSender;
 import com.omega.cowalk.util.RandomCodeGenerator;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,8 +64,8 @@ public class UserController
     @PostMapping("/register/email/check")
     public ResponseEntity<RegisterCheckCodeResponseDto> checkCode(@Valid @RequestBody RegisterCheckCodeRequestDto registerCheckCodeRequestDto)
     {
-        String sendCodeToken = registerCheckCodeRequestDto.getJwt_token();
-        String access_code = registerCheckCodeRequestDto.getUser_access_code();
+        String sendCodeToken = registerCheckCodeRequestDto.getJwtToken();
+        String access_code = registerCheckCodeRequestDto.getUserAccessCode();
 
         String email = tokenService.verifySignUpEmailSendCodeToken(sendCodeToken, access_code);
 
@@ -78,7 +77,7 @@ public class UserController
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto)
     {
-        String token = registerRequestDto.getJwt_token();
+        String token = registerRequestDto.getJwtToken();
         tokenService.verifySignUpEmailCheckCodeToken(token , registerRequestDto.getEmail());
 
         if(!userService.isNotDuplicateNickname(registerRequestDto.getNickname()))

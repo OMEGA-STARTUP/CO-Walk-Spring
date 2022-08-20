@@ -9,5 +9,5 @@ public interface AttendanceRepository extends CrudRepository<Attendance, Attenda
 {
     //유저가 출석한 횟수를 가져옴
     @Query("SELECT COUNT(*) FROM Attendance a WHERE a.user_id = ?1")
-    public int getAttendanceCountByUserId(long user_id);
+    public int getAttendanceCountByUserId(long userId);
 }

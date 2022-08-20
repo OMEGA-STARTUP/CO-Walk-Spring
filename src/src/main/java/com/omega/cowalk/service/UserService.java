@@ -54,7 +54,7 @@ public class UserService {
 
     public boolean isNotDuplicateEmail(String email)
     {
-        return userRepository.isNotDuplicateIdentifier(email);
+        return userRepository.isNotDuplicateEmail(email);
     }
 
 

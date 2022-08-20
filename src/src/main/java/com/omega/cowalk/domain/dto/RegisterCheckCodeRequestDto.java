@@ -14,8 +14,8 @@ public class RegisterCheckCodeRequestDto {
 
     @NotNull(message = "user_access_code should not be null or blank")
     @Size(min=6, max =6, message = "the length of access_code should be 6")
-    private final String user_access_code;
+    private final String userAccessCode;
 
     @NotNull(message = "jwt_token should not be null or blank")
-    private final String jwt_token;
+    private final String jwtToken;
 }

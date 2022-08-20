@@ -44,7 +44,7 @@ public class User
 
     //유저의 보유 소리수
     @Formula("(select COUNT(*) from playlist where user_id=user_id)")
-    private final int sound_numb;
+    private final int soundNumb;
 
 
 }

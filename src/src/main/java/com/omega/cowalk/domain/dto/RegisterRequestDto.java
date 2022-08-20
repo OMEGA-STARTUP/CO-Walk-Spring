@@ -28,6 +28,6 @@ public class RegisterRequestDto {
     private String nickname;
 
     @NotNull(message = "jwt_token should not be null!")
-    private String jwt_token;
+    private String jwtToken;
 
 }

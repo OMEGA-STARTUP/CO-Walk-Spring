@@ -10,5 +10,5 @@ import java.util.List;
 public interface PlaylistRepository extends CrudRepository<PlayList, PlayListPrimaryKey> {
 
     @Query("select p from PlayList p where p.user_id = ?1")
-    public List<PlayList> findPlayListsByUser_id(long user_id);
+    public List<PlayList> findPlayListsByUser_id(long userId);
 }

@@ -10,5 +10,5 @@ import java.util.List;
 public interface FavoriteRepository extends CrudRepository<Favorite, FavoritePrimaryKey> {
 
     @Query("select f from Favorite f where f.user_id = ?1")
-    public List<Favorite> findFavoritesByUser_id(long user_id);
+    public List<Favorite> findFavoritesByUser_id(long userId);
 }

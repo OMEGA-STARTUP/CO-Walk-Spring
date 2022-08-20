@@ -18,7 +18,7 @@ public interface AudioBookRepository extends CrudRepository<AudioBook, AudioBook
     @Query("select bs from AudioBook a, AudioSoundPlaylist asp, BackgroundSound bs " +
             "where a.audio_book_title = asp.audio_book_title AND a.user_id = asp.user_id AND asp.sound_id = bs.sound_id " +
             "AND a.audio_book_title = ?1 AND a.user_id = ?2 ORDER BY asp.order_numb")
-    public Optional<List<BackgroundSound>> getBackgroundSounds(String audio_book_title, long user_id, Pageable pageable);
+    public Optional<List<BackgroundSound>> getBackgroundSounds(String audioBookTitle, long userId, Pageable pageable);
 
 
 }

@@ -17,11 +17,11 @@ public class NotificationRead
 {
     @Id
     @Column(name = "user_id")
-    private final long user_id;
+    private final long userId;
 
     @Id
     @Column(name = "notification_id")
-    private final long notification_id;
+    private final long notificationId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "notification_id", referencedColumnName = "notification_id", updatable = false, insertable = false)
