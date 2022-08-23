@@ -17,9 +17,9 @@ public class Attendance {
 
     @Id
     @Column(name="attend_date")
-    private final java.sql.Date attend_date;
+    private final java.sql.Date attendDate;
 
     @Id
     @Column(name="user_id")
-    private final long user_id;
+    private final long userId;
 }

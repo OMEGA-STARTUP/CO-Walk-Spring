@@ -11,9 +11,9 @@ import java.io.Serializable;
 @ToString
 public class SteppingSound implements Serializable
 {
-    private final String stepping_sound_img_url;
+    private final String steppingSoundImgUrl;
 
-    private final String stepping_sound_name;
+    private final String steppingSoundName;
 
-    private final String stepping_sound_play_url;
+    private final String steppingSoundPlayUrl;
 }

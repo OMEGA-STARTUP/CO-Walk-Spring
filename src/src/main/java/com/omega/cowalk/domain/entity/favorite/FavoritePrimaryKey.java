@@ -7,8 +7,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class FavoritePrimaryKey implements Serializable {
 
-    private long user_id;
+    private long userId;
 
-    private long sound_id;
+    private long soundId;
 
 }

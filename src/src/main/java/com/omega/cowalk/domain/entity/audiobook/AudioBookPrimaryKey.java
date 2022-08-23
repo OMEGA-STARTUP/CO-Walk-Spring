@@ -7,8 +7,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AudioBookPrimaryKey implements Serializable
 {
-    private String audio_book_title;
+    private String audioBookTitle;
 
-    private long user_id;
+    private long userId;
 
 }

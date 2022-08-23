@@ -4,4 +4,8 @@ import com.omega.cowalk.security.auth.PrincipalUserDetails;
 
 public interface TokenCreator {
     String create(PrincipalUserDetails principalUserDetails, String key, long expiredTime);
+
+    public String createTokenForSignUpSendRequest(String email, String code, String key, long expiredTime);
+
+    public String createTokenForCheckSignUpCode(String email, String key, long expiredTime);
 }

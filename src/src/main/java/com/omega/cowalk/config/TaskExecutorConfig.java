@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
 
 //background task들을 위해서 Executor 세팅
 @Configuration
 @EnableAsync
+@Component
 public class TaskExecutorConfig {
 
     @Bean

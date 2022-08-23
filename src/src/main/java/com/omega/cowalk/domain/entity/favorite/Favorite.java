@@ -18,11 +18,11 @@ public class Favorite
 
     @Id
     @Column(name = "user_id")
-    private final long user_id;
+    private final long userId;
 
     @Id
     @Column(name = "sound_id")
-    private final long sound_id;
+    private final long soundId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sound_id",  referencedColumnName = "sound_id", updatable = false, insertable = false)

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface NotificationRepository extends CrudRepository<Notification, Long>
 {
-    @Query("select n from Notification n where n.notification_id = ?1")
-    public Optional<Notification> findByNotification_id(long notification_id);
+    @Query("select n from Notification n where n.notificationId = :notificationId")
+    Optional<Notification> findByNotificationId(long notificationId);
 }

@@ -27,8 +27,6 @@ public class UserService {
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                 .email(registerRequestDto.getEmail())
                 .nickname(registerRequestDto.getNickname())
-                .profileImgUrl(registerRequestDto.getProfile_img_url())
-                .soundBackgroundImgUrl(registerRequestDto.getSound_background_img_url())
                 .build();
 
         return Optional.of(userRepository.save(user));
@@ -42,6 +40,21 @@ public class UserService {
     public void deleteUser(User user)
     {
         userRepository.delete(user);
+    }
+
+    public boolean isNotDuplicateNickname( String nickname)
+    {
+        return userRepository.isNotDuplicateNickname(nickname);
+    }
+
+    public boolean isNotDuplicateIdentifier(String identifier)
+    {
+        return userRepository.isNotDuplicateIdentifier(identifier);
+    }
+
+    public boolean isNotDuplicateEmail(String email)
+    {
+        return userRepository.isNotDuplicateEmail(email);
     }
 
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class NotificationReadPrimaryKey implements Serializable
 {
 
-    private long user_id;
+    private long userId;
 
-    private long notification_id;
+    private long notificationId;
 }

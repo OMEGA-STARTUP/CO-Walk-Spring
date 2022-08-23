@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 
-
+// /user/register할때 RegisterRequestDto를 사용해야 되서 이름을 바꿧습니다.
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,11 +27,7 @@ public class RegisterRequestDto {
     @NotNull(message = "nickname should not be null!")
     private String nickname;
 
-
-    @Pattern(regexp = "http.*", message = "url should start with the word http")
-    private String sound_background_img_url;
-
-    @Pattern(regexp = "http.*", message = "url should start with the word http")
-    private String profile_img_url;
+    @NotNull(message = "jwt_token should not be null!")
+    private String jwtToken;
 
 }

@@ -24,26 +24,26 @@ public class BackgroundSound
     @Id
     @Column(name="sound_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final long sound_id;
+    private final long soundId;
 
     @Column(name="sound_name")
-    private final String sound_name;
+    private final String soundName;
 
     @Column(name="sound_play_time")
-    private final int sound_play_time;
+    private final int soundPlayTime;
 
     @Column(name="sound_img_url")
-    private final String sound_img_url;
+    private final String soundImgUrl;
 
     @Column(name="sound_play_url")
-    private final String sound_play_url;
+    private final String soundPlayUrl;
 
     @Column(name="sound_src_url")
-    private final String sound_src_url;
+    private final String soundSrcUrl;
 
 
     @Type(type = "jsonb")
     @Column(name="stepping_sounds" , columnDefinition = "jsonb")
-    private final List<SteppingSound> stepping_sounds;
+    private final List<SteppingSound> steppingSounds;
 
 }
