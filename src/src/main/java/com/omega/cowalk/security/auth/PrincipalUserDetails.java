@@ -1,6 +1,6 @@
 package com.omega.cowalk.security.auth;
 
-import com.omega.cowalk.domain.entity.User;
+import com.omega.cowalk.domain.entity.user.User;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

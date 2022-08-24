@@ -7,8 +7,9 @@ import com.omega.cowalk.security.token.service.TokenService;
 import com.omega.cowalk.service.UserService;
 import com.omega.cowalk.util.MailSender;
 import com.omega.cowalk.util.RandomCodeGenerator;
+import com.omega.cowalk.util.SuccessResult;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,20 +21,15 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class UserController
-{
-    @Autowired
-    MailSender mailSender;
+@RequiredArgsConstructor
+public class UserController {
 
-    @Autowired
-    TokenService tokenService;
-
-    @Autowired
-    UserService userService;
-
+    private final MailSender mailSender;
+    private final TokenService tokenService;
+    private final UserService userService;
 
     @PostMapping("/register/email/send")
-    public ResponseEntity<RegisterSendCodeResponseDto> sendEmailCode(@Valid @RequestBody RegisterSendCodeRequestDto registerSendCodeRequestDto){
+    public ResponseEntity<SuccessResult> sendEmailCode(@Valid @RequestBody RegisterSendCodeRequestDto registerSendCodeRequestDto){
         log.debug("sendMailCode is called!");
 
         String email = registerSendCodeRequestDto.getEmail();
@@ -56,13 +52,15 @@ public class UserController
                 });
 
         String token = tokenService.issueSignUpEmailSendCodeToken(email, code);
+        RegisterSendCodeResponseDto registerSendCodeResponseDto =
+                new RegisterSendCodeResponseDto(token);
 
-        return ResponseEntity.ok(new RegisterSendCodeResponseDto(token));
+        return ResponseEntity.ok(new SuccessResult(registerSendCodeResponseDto));
 
     }
 
     @PostMapping("/register/email/check")
-    public ResponseEntity<RegisterCheckCodeResponseDto> checkCode(@Valid @RequestBody RegisterCheckCodeRequestDto registerCheckCodeRequestDto)
+    public ResponseEntity<SuccessResult> checkCode(@Valid @RequestBody RegisterCheckCodeRequestDto registerCheckCodeRequestDto)
     {
         String sendCodeToken = registerCheckCodeRequestDto.getJwtToken();
         String access_code = registerCheckCodeRequestDto.getUserAccessCode();
@@ -70,8 +68,10 @@ public class UserController
         String email = tokenService.verifySignUpEmailSendCodeToken(sendCodeToken, access_code);
 
         String verifiedCodeToken = tokenService.issueSignUpEmailVerifyCodeToken(email);
+        RegisterCheckCodeResponseDto registerCheckCodeResponseDto =
+                new RegisterCheckCodeResponseDto(verifiedCodeToken);
 
-        return ResponseEntity.ok(new RegisterCheckCodeResponseDto(verifiedCodeToken));
+        return ResponseEntity.ok(new SuccessResult(registerCheckCodeResponseDto));
     }
 
     @PostMapping("/register")

@@ -1,9 +1,7 @@
-package com.omega.cowalk.domain;
+package com.omega.cowalk.util;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Date;
 
@@ -11,10 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ExceptionResult
 {
-    private final String msg;
     private final Date timestamp;
+    private final String msg;
     private final String details;
-
-
-
 }

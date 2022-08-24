@@ -1,4 +1,4 @@
-package com.omega.cowalk.domain.entity;
+package com.omega.cowalk.domain.entity.user;
 
 import lombok.*;
 import org.hibernate.annotations.Formula;

@@ -1,12 +1,12 @@
 package com.omega.cowalk.exceptionHandler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.omega.cowalk.domain.ExceptionResult;
 import com.omega.cowalk.exception.EmailDuplicateException;
 import com.omega.cowalk.exception.IdentifierDuplicateException;
 import com.omega.cowalk.exception.NicknameDuplicationException;
 import com.omega.cowalk.security.exceptions.InvalidAccessCodeException;
 import com.omega.cowalk.security.exceptions.JwtNotFoundException;
+import com.omega.cowalk.util.ExceptionResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ import java.util.Date;
 @ControllerAdvice
 @RestController
 @Slf4j
-public class CustomizedResposneEntityExceptionHandler extends ResponseEntityExceptionHandler
+public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(InvalidAccessCodeException.class)
     public final ResponseEntity<Object> handleInvalidAccessCodeException(Exception ex, WebRequest request)
@@ -31,8 +31,8 @@ public class CustomizedResposneEntityExceptionHandler extends ResponseEntityExce
         log.debug("handleInvalidAccessCodeException is called");
 
         ExceptionResult exceptionResult = new ExceptionResult(
-                ex.getMessage(),
                 new Date(),
+                ex.getMessage(),
                 "access code is not right!"
         );
 
@@ -45,8 +45,8 @@ public class CustomizedResposneEntityExceptionHandler extends ResponseEntityExce
         log.debug("handleJwtNotFoundException is called");
 
         ExceptionResult exceptionResult = new ExceptionResult(
-                ex.getMessage(),
                 new Date(),
+                ex.getMessage(),
                 "jwt token is not found!"
         );
 
@@ -59,8 +59,8 @@ public class CustomizedResposneEntityExceptionHandler extends ResponseEntityExce
         log.debug("handleJwtVerificationException is called");
 
         ExceptionResult exceptionResult = new ExceptionResult(
-                ex.getMessage(),
                 new Date(),
+                ex.getMessage(),
                 "token fails to be verified"
         );
 
@@ -73,15 +73,24 @@ public class CustomizedResposneEntityExceptionHandler extends ResponseEntityExce
         log.debug("handleJwtVerificationException is called");
 
         ExceptionResult exceptionResult = new ExceptionResult(
-                ex.getMessage(),
                 new Date(),
+                ex.getMessage(),
                 "it has duplicate value in the field"
         );
 
         return new ResponseEntity(exceptionResult, HttpStatus.PRECONDITION_FAILED);
     }
 
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<Object> handleInternalServerExceptions(Exception ex, WebRequest request){
+        ExceptionResult exceptionResult = new ExceptionResult(
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
 
+        return new ResponseEntity(exceptionResult, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid
@@ -96,8 +105,8 @@ public class CustomizedResposneEntityExceptionHandler extends ResponseEntityExce
                 :ex.getBindingResult().getFieldError().getDefaultMessage();
 
         ExceptionResult exceptionResult = new ExceptionResult(
-                "not a valid format",
                 new Date(),
+                "not a valid format",
                         rejectedValue
                         + " is not valid with message : "
                         + message

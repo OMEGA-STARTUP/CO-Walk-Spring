@@ -1,18 +1,11 @@
 package com.omega.cowalk.security.filter;
 
-import com.omega.cowalk.domain.entity.User;
 import com.omega.cowalk.repository.UserRepository;
-import com.omega.cowalk.security.auth.PrincipalUserDetails;
-import com.omega.cowalk.security.token.JwtAuthenticationToken;
 import com.omega.cowalk.security.token.JwtTokenProperties;
 import com.omega.cowalk.security.token.service.TokenService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -46,7 +39,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @SneakyThrows
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("인증이나 권한이 필요한 요청: " + request.getRequestURI() );
+        log.debug("인증이나 권한이 필요한 요청: " + request.getRequestURI() );
         tokenService.verifyToken(request.getHeader(JwtTokenProperties.HEADER_ACCESS_KEY), tokenService.getSECRET_KEY());
 
         chain.doFilter(request, response);

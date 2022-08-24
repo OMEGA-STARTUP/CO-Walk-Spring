@@ -1,7 +1,7 @@
 package com.omega.cowalk.service;
 
 import com.omega.cowalk.domain.dto.RegisterRequestDto;
-import com.omega.cowalk.domain.entity.User;
+import com.omega.cowalk.domain.entity.user.User;
 import com.omega.cowalk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

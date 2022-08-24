@@ -1,6 +1,6 @@
 package com.omega.cowalk.security.auth;
 
-import com.omega.cowalk.domain.entity.User;
+import com.omega.cowalk.domain.entity.user.User;
 import com.omega.cowalk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -39,6 +39,6 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        objectMapper.writeValue(response.getWriter(), new SuccessResult(HttpStatus.OK.value(), "인증 성공", jwtTokenIssueDto));
+        objectMapper.writeValue(response.getWriter(), new SuccessResult(jwtTokenIssueDto));
     }
 }

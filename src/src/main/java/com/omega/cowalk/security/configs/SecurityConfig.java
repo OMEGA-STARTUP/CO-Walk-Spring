@@ -1,6 +1,6 @@
 package com.omega.cowalk.security.configs;
 
-import com.omega.cowalk.domain.entity.Role;
+import com.omega.cowalk.domain.entity.user.Role;
 import com.omega.cowalk.repository.UserRepository;
 import com.omega.cowalk.security.filter.IgnorePathFilterRules;
 import com.omega.cowalk.security.filter.JwtAuthorizationExceptionFilter;

@@ -6,7 +6,6 @@ import com.omega.cowalk.security.exceptions.AuthenticationNotSupportedException;
 import com.omega.cowalk.security.token.JwtAuthenticationToken;
 import com.omega.cowalk.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -30,9 +29,9 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException, IOException {
+            throws AuthenticationException {
 
-        log.info("사용자 인증 시도");
+        log.debug("사용자 인증 시도");
 
         // Http Method & Request Header 검증
         if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isContentTypeJson(request)) {
@@ -40,10 +39,13 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         }
 
         // Http Message Body 검증
-        /**
-         * JSON 형식으로 넘기지 않았을 때, 예외처리 중
-         */
-        LoginRequestDto loginRequestDto = objectMapper.readValue(request.getReader(), LoginRequestDto.class);
+        LoginRequestDto loginRequestDto;
+        try{
+            loginRequestDto = objectMapper.readValue(request.getReader(), LoginRequestDto.class);
+        } catch(IOException e){
+            throw new AuthenticationServiceException("Only support JSON data ");
+        }
+
         if (!StringUtils.hasText(loginRequestDto.getIdentifier()) || !StringUtils.hasText(loginRequestDto.getPassword())) {
             throw new AuthenticationNotSupportedException("Username or Password not provided");
         }
