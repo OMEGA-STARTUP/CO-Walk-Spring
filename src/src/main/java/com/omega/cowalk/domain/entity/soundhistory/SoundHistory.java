@@ -1,5 +1,6 @@
 package com.omega.cowalk.domain.entity.soundhistory;
 
+import com.omega.cowalk.domain.entity.backgroundsound.BackgroundSound;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,4 +31,11 @@ public class SoundHistory {
 
     @Column(name = "actual_play_time")
     private final int actual_play_time;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="sound_id", referencedColumnName= "sound_id", updatable = false, insertable = false)
+    private final BackgroundSound backgroundSound;
+
+
 }

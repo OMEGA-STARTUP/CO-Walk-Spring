@@ -6,6 +6,7 @@ import com.omega.cowalk.exception.IdentifierDuplicateException;
 import com.omega.cowalk.exception.NicknameDuplicationException;
 import com.omega.cowalk.security.exceptions.InvalidAccessCodeException;
 import com.omega.cowalk.security.exceptions.JwtNotFoundException;
+import com.omega.cowalk.exception.UserNotFoundException;
 import com.omega.cowalk.util.ExceptionResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +38,20 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         );
 
         return new ResponseEntity(exceptionResult, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public final ResponseEntity<Object> handleUserNotFoundException(Exception ex, WebRequest request)
+    {
+        log.debug("user is not found!");
+
+        ExceptionResult exceptionResult = new ExceptionResult(
+                new Date(),
+                ex.getMessage(),
+                "user not found!"
+        );
+
+        return new ResponseEntity(exceptionResult, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(JwtNotFoundException.class)
