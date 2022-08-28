@@ -12,12 +12,12 @@ public class AwsConfig {
     @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;
 
-    @Value("${cloud.aws.credentials.access-key}")
+    @Value("${cloud.aws.credentials.secret-key}")
     private String privateKey;
 
 
     @Bean
-    AWSCredentials getAwsCredentials()
+    public AWSCredentials awsCredentials()
     {
         return new BasicAWSCredentials(accessKey, privateKey);
     }

@@ -36,8 +36,8 @@ public class User
     @Enumerated(EnumType.STRING)
     private final Role role = Role.USER;
 
-    @Column(name = "sound_background_img_url")
-    private final String soundBackgroundImgUrl;
+    @Column(name = "profile_background_id")
+    private final String soundBackgroundId;
 
     @Column(name = "profile_img_url")
     private final String profileImgUrl;

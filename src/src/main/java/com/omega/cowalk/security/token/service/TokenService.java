@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.omega.cowalk.domain.entity.user.Role;
+import com.omega.cowalk.domain.entity.user.User;
 import com.omega.cowalk.security.auth.PrincipalUserDetails;
 import com.omega.cowalk.security.exceptions.InvalidAccessCodeException;
 import com.omega.cowalk.security.exceptions.JwtMalformedException;
@@ -43,17 +45,22 @@ public class TokenService {
         return REFRESH_KEY;
     }
 
-    public String verifyToken(String jwtTokenHeader, String keyType) throws JWTVerificationException {
+    public PrincipalUserDetails verifyToken(String jwtTokenHeader, String keyType) throws JWTVerificationException {
         // Header 검증
         String jwtToken = verifyHeader(jwtTokenHeader);
         // Jwt Refresh Token 검증
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(keyType)).build().verify(jwtToken);
+        long userId = Long.parseLong(decodedJWT.getSubject());
         String identifier = decodedJWT.getClaim("identifier").asString();
         if(identifier == null){
             throw new JwtMalformedException("Jwt token malformed");
         }
 
-        return identifier;
+        return new PrincipalUserDetails(User.builder()
+                .id(userId)
+                .identifier(identifier)
+                .role(Role.USER)
+                .build());
     }
 
     private String verifyHeader(String jwtTokenHeader) throws JwtNotFoundException {
