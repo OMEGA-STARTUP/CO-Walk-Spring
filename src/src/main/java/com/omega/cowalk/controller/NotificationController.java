@@ -12,6 +12,8 @@ import com.omega.cowalk.util.SuccessResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,8 +41,7 @@ public class NotificationController {
 
     @GetMapping
     public ResponseEntity<SuccessResult> getNotifications(
-            @RequestHeader("ACCESS_TOKEN") String accessToken){
-        PrincipalUserDetails principalUserDetails = tokenService.verifyToken(accessToken, tokenService.getSECRET_KEY());
+            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails){
         List<NotificationPageResponseDto> notificationPageResponseDtos =
                 notificationService.searchNotifications(principalUserDetails.getUser().getId());
         return ResponseEntity.ok(new SuccessResult(notificationPageResponseDtos));
@@ -48,9 +49,8 @@ public class NotificationController {
 
     @GetMapping("/{notification-id}")
     public ResponseEntity<SuccessResult> getNotification(
-            @RequestHeader("ACCESS_TOKEN") String accessToken,
-            @PathVariable("notification-id") long notificationId){
-        PrincipalUserDetails principalUserDetails = tokenService.verifyToken(accessToken, tokenService.getSECRET_KEY());
+            @PathVariable("notification-id") long notificationId,
+            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails){
         NotificationPageResponseDto notificationPageResponseDto =
                 notificationService.searchNotification(principalUserDetails.getUser().getId(), notificationId);
         return ResponseEntity.ok(new SuccessResult(notificationPageResponseDto));
@@ -58,11 +58,9 @@ public class NotificationController {
 
     @PutMapping("/{notification-id}")
     public ResponseEntity<Object> readNotification(
-            @RequestHeader("ACCESS_TOKEN") String accessToken,
+            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
             @PathVariable("notification-id") long notificationId){
-        PrincipalUserDetails principalUserDetails = tokenService.verifyToken(accessToken, tokenService.getSECRET_KEY());
         notificationReadService.clickReadButton(principalUserDetails.getUser().getId(), notificationId);
-
         return ResponseEntity.ok().build();
     }
 }
