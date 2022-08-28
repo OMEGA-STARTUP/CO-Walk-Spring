@@ -27,7 +27,6 @@ public class NotificationController {
     private final NotificationService notificationService;
     private final NotificationReadService notificationReadService;
     private final FirebaseMessagingService messagingService;
-    private final TokenService tokenService;
 
     // 관리자가 푸쉬알림을 전송하는 API
     @PostMapping
