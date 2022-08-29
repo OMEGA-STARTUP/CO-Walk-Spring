@@ -40,3 +40,6 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
+
+# CUSTOM
+src/main/resources/co-walk-firebase-service-account.json
