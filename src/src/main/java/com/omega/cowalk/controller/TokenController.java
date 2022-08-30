@@ -30,12 +30,13 @@ public class TokenController {
             @RequestHeader(name = "REFRESH_TOKEN") String jwtTokenHeader) throws JWTVerificationException {
         log.debug("request reached to the controller");
 
-        String identifier = tokenService.verifyToken(jwtTokenHeader, tokenService.getREFRESH_KEY());
+        PrincipalUserDetails principalUserDetails = tokenService.verifyToken(jwtTokenHeader, tokenService.getREFRESH_KEY());
 
-        User user = userService.findByIdentifier(identifier)
-                .orElseThrow(() -> new UsernameNotFoundException("Not found username"));
+        if(principalUserDetails == null){
+            throw new UsernameNotFoundException("유효하지 않은 토큰입니다.");
+        }
 
-        String jwtAccessToken = tokenService.reIssue(new PrincipalUserDetails(user));
+        String jwtAccessToken = tokenService.reIssue(principalUserDetails);
         JwtTokenReIssueDto jwtTokenReIssueDto = new JwtTokenReIssueDto(jwtAccessToken);
 
         return ResponseEntity.ok()
@@ -45,3 +46,4 @@ public class TokenController {
 
 
 }
+
