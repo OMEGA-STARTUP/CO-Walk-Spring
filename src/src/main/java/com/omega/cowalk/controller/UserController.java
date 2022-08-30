@@ -13,7 +13,6 @@ import com.omega.cowalk.util.RandomCodeGenerator;
 import com.omega.cowalk.util.SuccessResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +69,7 @@ public class UserController {
     public ResponseEntity<SuccessResult> checkCode(@Valid @RequestBody RegisterCheckCodeRequestDto registerCheckCodeRequestDto)
     {
         String sendCodeToken = registerCheckCodeRequestDto.getJwtToken();
-        String access_code = registerCheckCodeRequestDto.getUserAccessCode();
+        String access_code = registerCheckCodeRequestDto.getUser_access_code();
 
         String email = tokenService.verifySignUpEmailSendCodeToken(sendCodeToken, access_code);
 
@@ -84,7 +83,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto)
     {
-        String token = registerRequestDto.getJwtToken();
+        String token = registerRequestDto.getJwt_token();
         tokenService.verifySignUpEmailCheckCodeToken(token , registerRequestDto.getEmail());
 
         if(!userService.isNotDuplicateNickname(registerRequestDto.getNickname()))
@@ -109,7 +108,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/nickname")
+    @PatchMapping("/profile/nickname")
     public void nicknamePatch(@Valid @RequestBody NicknamePatchRequestDto nicknamePatchRequestDto,
                               Authentication authentication)
     {
@@ -127,25 +126,25 @@ public class UserController {
 
 
     @PutMapping("/profile/user-picture")
-    public void profileUpdate(@Valid @ModelAttribute ProfileUpdateRequestDto profileUpdateRequestDto ,
+    public void profileUpdate(@RequestPart MultipartFile profile_picture ,
                               Authentication authentication) throws IOException
     {
         long userId = ((PrincipalUserDetails) authentication.getPrincipal()).getUser().getId();
-        pictureUploader.uploadProfilePicture(profileUpdateRequestDto.getProfilePicture(), userId)
+        pictureUploader.uploadProfilePicture(profile_picture, userId)
                 .whenComplete((result, ex) ->{
-            if(ex == null && result != null){
-                log.debug("successfully uploaded picture!");
-                userService.updateProfilePicture(result, userId);
-            }
-            else if(ex != null)
-            {
-                log.error("error in uploading picture");
-                log.error(ex.getMessage());
-            }
-            else{
-                log.error("error not generated but failed. something went wrong");
-            }
-        });
+                    if(ex == null && result != null){
+                        log.debug("successfully uploaded picture!");
+                        userService.updateProfilePicture(result, userId);
+                    }
+                    else if(ex != null)
+                    {
+                        log.error("error in uploading picture");
+                        log.error(ex.getMessage());
+                    }
+                    else{
+                        log.error("error not generated but failed. something went wrong");
+                    }
+                });
 
     }
 
@@ -157,7 +156,7 @@ public class UserController {
         userService.updateSoundPicture(soundPictureUpdateRequestDto.getSound_background_id(), userId);
     }
 
-    @GetMapping
+    @GetMapping("/profile")
     public GetUserProfileResponseDto getUserProfile(Authentication authentication)
     {
         long userId = ((PrincipalUserDetails) authentication.getPrincipal()).getUser().getId();

@@ -11,10 +11,10 @@ import software.amazon.awssdk.auth.credentials.AwsCredentials;
 @Configuration
 public class AwsConfig {
 
-    //@Value("${cloud.aws.credentials.access-key}")
+    @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;
 
-    //@Value("${cloud.aws.credentials.access-key}")
+    @Value("${cloud.aws.credentials.secret-key}")
     private String privateKey;
 
 

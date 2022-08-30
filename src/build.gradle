@@ -43,9 +43,6 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-admin:9.0.0'
 
-    //Firebase
-    implementation 'com.google.firebase:firebase-admin:9.0.0'
-
 
     // JWT
     implementation 'com.auth0:java-jwt:4.0.0'
