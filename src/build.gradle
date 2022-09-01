@@ -37,11 +37,13 @@ dependencies {
     implementation 'software.amazon.awssdk:protocol-core'
     implementation platform('software.amazon.awssdk:bom:2.10.86')
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+
     implementation 'software.amazon.awssdk:ssm:2.16.2'
     implementation 'software.amazon.awssdk:s3'
     
     //Firebase
     implementation 'com.google.firebase:firebase-admin:9.0.0'
+
 
 
     // JWT

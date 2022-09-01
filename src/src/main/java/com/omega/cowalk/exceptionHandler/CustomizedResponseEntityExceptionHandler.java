@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.omega.cowalk.exception.EmailDuplicateException;
 import com.omega.cowalk.exception.IdentifierDuplicateException;
 import com.omega.cowalk.exception.NicknameDuplicationException;
+import com.omega.cowalk.exception.NotificationNotFoundException;
 import com.omega.cowalk.security.exceptions.InvalidAccessCodeException;
 import com.omega.cowalk.security.exceptions.JwtNotFoundException;
 import com.omega.cowalk.exception.UserNotFoundException;
@@ -94,6 +95,19 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         );
 
         return new ResponseEntity(exceptionResult, HttpStatus.PRECONDITION_FAILED);
+    }
+
+    @ExceptionHandler(NotificationNotFoundException.class)
+    public final ResponseEntity<Object> handleNotificationNotFoundException(Exception ex, WebRequest request){
+        log.debug("handleNotificationNotFoundException is called");
+
+        ExceptionResult exceptionResult = new ExceptionResult(
+                new Date(),
+                ex.getMessage(),
+                "Not found Notification"
+        );
+
+        return new ResponseEntity(exceptionResult, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)

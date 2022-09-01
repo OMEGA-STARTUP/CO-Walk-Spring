@@ -19,7 +19,7 @@ public class AwsConfig {
 
 
     @Bean
-    AWSCredentials getAwsCredentials()
+    public AWSCredentials awsCredentials()
     {
         return new BasicAWSCredentials(accessKey, privateKey);
     }

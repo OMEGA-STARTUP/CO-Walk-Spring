@@ -39,6 +39,7 @@ public class User
     @Column(name = "profile_background_id")
     private final long soundBackgroundId;
 
+
     @Column(name = "profile_img_url")
     private final String profileImgUrl;
 
