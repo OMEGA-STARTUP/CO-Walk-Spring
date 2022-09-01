@@ -2,7 +2,6 @@ package com.omega.cowalk.domain.entity.backgroundsound;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
@@ -41,8 +40,7 @@ public class BackgroundSound
     @Column(name="sound_src_url")
     private final String soundSrcUrl;
 
-
-    @Type(type = "jsonb")
+    @Convert(converter = SteppingSoundConverter.class)
     @Column(name="stepping_sounds" , columnDefinition = "jsonb")
     private final List<SteppingSound> steppingSounds;
 

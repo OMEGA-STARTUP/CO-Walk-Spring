@@ -4,7 +4,7 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.omega.cowalk.domain.dto.NotificationPageResponseDto;
 import com.omega.cowalk.domain.dto.NotificationSendRequestDto;
 import com.omega.cowalk.security.auth.PrincipalUserDetails;
-import com.omega.cowalk.security.token.service.TokenService;
+
 import com.omega.cowalk.service.FirebaseMessagingService;
 import com.omega.cowalk.service.NotificationReadService;
 import com.omega.cowalk.service.NotificationService;
@@ -12,7 +12,7 @@ import com.omega.cowalk.util.SuccessResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RegisterSendCodeResponseDto {
 
-    private final String jwtToken;
+    private final String jwt_token;
 }

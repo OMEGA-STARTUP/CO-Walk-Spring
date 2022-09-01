@@ -37,7 +37,8 @@ public class User
     private final Role role = Role.USER;
 
     @Column(name = "profile_background_id")
-    private final String soundBackgroundId;
+    private final long soundBackgroundId;
+
 
     @Column(name = "profile_img_url")
     private final String profileImgUrl;
@@ -45,6 +46,10 @@ public class User
     //유저의 보유 소리수
     @Formula("(select COUNT(*) from playlist where user_id=user_id)")
     private final int soundNumb;
+
+
+
+
 
 
 }
