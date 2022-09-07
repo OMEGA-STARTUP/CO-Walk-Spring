@@ -29,6 +29,9 @@ dependencies {
     implementation 'com.vladmihalcea:hibernate-types-52:2.4.2'
     implementation 'org.hibernate:hibernate-core'
 
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
+
     // jsypt 암호화 라이브러리
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
     // AWS
