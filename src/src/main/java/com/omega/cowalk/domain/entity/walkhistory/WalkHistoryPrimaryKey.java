@@ -2,11 +2,11 @@ package com.omega.cowalk.domain.entity.walkhistory;
 
 import lombok.AllArgsConstructor;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 public class WalkHistoryPrimaryKey {
 
-    private Date walkDate;
+    private LocalDate walkDate;
     private long userId;
 }
