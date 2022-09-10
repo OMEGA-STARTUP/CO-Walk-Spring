@@ -53,8 +53,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             Authentication authentication = new JwtAuthenticationToken(principalUserDetails, null, principalUserDetails.getAuthorities());
 
             //강제로 시큐리티의 세션에 접근하여 Authentication 객체를 저장
-            SecurityContext securityContext = SecurityContextHolder.getContext();
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
             securityContext.setAuthentication(authentication);
+            SecurityContextHolder.setContext(securityContext);
         }
 
         chain.doFilter(request, response);
