@@ -2,6 +2,8 @@ package com.omega.cowalk.domain.entity.walkhistory;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.IndexDirection;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -14,13 +16,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Document("walk_history")
-@CompoundIndex(name = "walk_history_unique_idx", def = "{'walkDate': 1, 'userId': 1}", unique = true)
 public class WalkHistory {
 
-    @Id
+    @Indexed(name = "walkDate", direction = IndexDirection.ASCENDING, unique = true)
     private LocalDate walkDate;
 
-    @Id
+    @Indexed(name = "userId", direction = IndexDirection.ASCENDING)
     private long userId;
 
     @Field(name = "steps", write = Field.Write.NON_NULL)

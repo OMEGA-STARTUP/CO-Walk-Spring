@@ -5,6 +5,7 @@ import com.omega.cowalk.domain.entity.walkhistory.WalkHistory;
 import com.omega.cowalk.repository.WalkHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class WalkHistoryService {
 
     private final WalkHistoryRepository walkHistoryRepository;
 
+    @Async("walkHistoryThreadPoolTaskExecutor")
     @Transactional
     public void addWalkHistory(long userId){
         Optional<WalkHistory> findWalkHistory = walkHistoryRepository
