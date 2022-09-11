@@ -46,4 +46,27 @@ public class JwtTokenCreator implements TokenCreator {
                  .sign(Algorithm.HMAC512(key));
      }
 
+    @Override
+    public String createTokenForPasswordSendRequest(String identifier, String code, String key, long expiredTime) {
+        return JWT.create()
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + expiredTime))
+                .withClaim("identifier", identifier)
+                .withClaim("purpose_code", 1)
+                .withClaim("access_code", code)
+                .withClaim("isVerified", false)
+                .sign(Algorithm.HMAC512(key));
+    }
+
+    @Override
+    public String createTokenForPasswordCheckRequest(String identifier, String key, long expiredTime) {
+        return JWT.create()
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + expiredTime))
+                .withClaim("identifier", identifier)
+                .withClaim("purpose_code", 1)
+                .withClaim("isVerified", true)
+                .sign(Algorithm.HMAC512(key));
+    }
+
 }
