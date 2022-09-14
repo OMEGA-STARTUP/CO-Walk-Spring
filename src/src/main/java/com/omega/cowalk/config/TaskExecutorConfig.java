@@ -22,4 +22,14 @@ public class TaskExecutorConfig {
 
         return taskExecutor;
     }
+
+    @Bean(name = "walkHistoryThreadPoolTaskExecutor")
+    public TaskExecutor walkHistoryThreadPoolTaskExecutor(){
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(5);    //기본 스레드 수
+        taskExecutor.setMaxPoolSize(30);    //최대 스레드 수
+        taskExecutor.setQueueCapacity(100); //Queue 사이즈
+
+        return taskExecutor;
+    }
 }

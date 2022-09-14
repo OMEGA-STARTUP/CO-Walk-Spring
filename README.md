@@ -7,12 +7,12 @@
 | 분류 | 개발환경 | 
 |---|---|
 | 운영체제 | Mac OS |
-| 개발도구 | Intellij IDEA, Gradle |
+| 개발도구 | Intellij IDEA, Gradle, Postman, Swagger |
 | 프레임워크 | Spring Boot 2.7.2 |
-| 데이터베이스 | PostgreSQL (Release 14.4) |
+| 데이터베이스 | PostgreSQL (Release 14.4), MongoDB (Release 5.0.11) |
 | 버전 관리 | Github, Git |
 | 배포 및 운영 | AWS, Docker, Github Actions  |
-| 오픈소스 및 외부 라이브러리 | JSON Web Token API, Jasypt |
+| 오픈소스 및 외부 라이브러리 | JSON Web Token API, Jasypt, Firebase Cloud Messaging |
 
 
 ## 🛠 세부 기술 스택(Tech Stack)
@@ -22,6 +22,7 @@
 - **Spring Boot 2.7.2**
 	- Spring Web MVC
 	- Spring Data JPA
+	- Spring Data MongoDB
 	- Spring Security
 	- Spring Validation
 
@@ -35,10 +36,7 @@
 ### 데이터베이스(Database)
 
 - **PostgreSQL (Release 14.4)**
-
-### ETC
-
-- 추가 예정
+- **MongoDB (Release 5.0.11)**
 
 ## 📝 기능 정의서(Functional Details)
 
