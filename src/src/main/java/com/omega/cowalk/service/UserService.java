@@ -41,6 +41,11 @@ public class UserService {
         return Optional.of(userRepository.save(user));
     }
 
+    public Optional<User> findByEmail(String email)
+    {
+        return userRepository.findByEmail(email);
+    }
+
     public Optional<User> findByIdentifier(String identifier) {
         return userRepository.findByIdentifier(identifier);
     }
@@ -96,6 +101,11 @@ public class UserService {
         return new GetUserProfileResponseDto(user.getNickname(), user.getProfileImgUrl(), user.getSoundNumb(),
                 user.getSoundBackgroundId(), userRecentHistories);
 
+    }
+
+    @Transactional
+    public void updatePassword(String unencodedPassword, String identifier){
+        userRepository.updateUserPassword(passwordEncoder.encode(unencodedPassword), identifier);
     }
 
 

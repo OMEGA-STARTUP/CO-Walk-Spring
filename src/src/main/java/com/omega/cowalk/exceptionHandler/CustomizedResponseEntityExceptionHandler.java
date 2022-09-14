@@ -17,6 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -52,6 +53,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 "user not found!"
         );
 
+        if(((ServletWebRequest)request).getRequest().getRequestURI().equals("/user/id-inquiry/email/send")) {
+            return new ResponseEntity(exceptionResult, HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity(exceptionResult, HttpStatus.UNAUTHORIZED);
     }
 

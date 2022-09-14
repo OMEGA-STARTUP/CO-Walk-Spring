@@ -8,4 +8,11 @@ public interface TokenCreator {
     public String createTokenForSignUpSendRequest(String email, String code, String key, long expiredTime);
 
     public String createTokenForCheckSignUpCode(String email, String key, long expiredTime);
+
+    public String createTokenForPasswordSendRequest(String identifier, String code, String key, long expiredTime);
+
+    public String createTokenForPasswordCheckRequest(String identifier, String key, long expiredTime);
+
+
+
 }

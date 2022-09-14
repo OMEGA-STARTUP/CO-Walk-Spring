@@ -106,6 +106,26 @@ public class TokenService {
         return JwtTokenProperties.HEADER_PREFIX + jwtSendCodeToken;
     }
 
+    public String issuePasswordEmailSendCodeToken(String identifier, String code)
+    {
+        log.debug("비번 새로 생성 이메일 보내기 토큰 발급");
+        String jwtSendCodeToken = jwtTokenCreator.createTokenForPasswordSendRequest(
+                identifier, passwordEncoder.encode(code), SECRET_KEY,
+                JwtTokenProperties.PASSWORD_SEND_REQUEST_TOKEN_EXPIRED_TIME);
+
+        return JwtTokenProperties.HEADER_PREFIX + jwtSendCodeToken;
+    }
+
+    public String issuePasswordEmailVerifyToken(String identifier)
+    {
+        log.debug("비번 새로 생성 코드 체크후 토큰 발급");
+        String jwtSendCodeToken = jwtTokenCreator.createTokenForPasswordCheckRequest(
+                identifier, SECRET_KEY,
+                JwtTokenProperties.PASSWORD_SEND_REQUEST_TOKEN_EXPIRED_TIME);
+
+        return JwtTokenProperties.HEADER_PREFIX + jwtSendCodeToken;
+    }
+
     public String verifySignUpEmailSendCodeToken(String token, String code)
     {
         log.debug("이메일 코드 확인하고 이메일 리턴시작");
@@ -169,6 +189,72 @@ public class TokenService {
         }
 
         return email;
+
+    }
+
+    public String verifyPasswordEmailSendCodeToken(String token, String code)
+    {
+        log.debug("비번 다시 생성 토큰내에 코드 체크");
+
+        token = verifyHeader(token);
+        DecodedJWT decodedJWT = getDecodedJWT(token, SECRET_KEY);
+        String encodedCode = decodedJWT.getClaim("access_code").asString();
+        int purposeCode = decodedJWT.getClaim("purpose_code").asInt();
+
+        if(encodedCode == null)
+        {
+            throw new JwtMalformedException("token missing some fields");
+        }
+        if(purposeCode != 1 )
+        {
+            throw new JWTVerificationException("purpose_code is not right");
+        }
+
+        if(!passwordEncoder.matches(code, encodedCode))
+        {
+            throw new InvalidAccessCodeException("email code does not match!");
+        }
+
+        String identifier = decodedJWT.getClaim("identifier").asString();
+        if(identifier == null)
+        {
+            throw new JwtMalformedException("token missing email field");
+        }
+
+        return identifier;
+
+    }
+
+    public String verifyPasswordEmailCheckCodeToken(String token, String unVerifiedIdentifier)
+    {
+        log.debug("이메일 코드확인 후 발급된 토큰을 verify 시작");
+
+        token = verifyHeader(token);
+        DecodedJWT decodedJWT = getDecodedJWT(token, SECRET_KEY);
+        boolean isVerified = decodedJWT.getClaim("isVerified").asBoolean();
+        int purposeCode = decodedJWT.getClaim("purpose_code").asInt();
+
+        if(!isVerified)
+        {
+            throw new JWTVerificationException("the access_code is not verified");
+        }
+        if(purposeCode != 1 )
+        {
+            throw new JWTVerificationException("purpose_code is not right");
+        }
+
+        String identifier = decodedJWT.getClaim("identifier").asString();
+        if(identifier == null)
+        {
+            throw new JwtMalformedException("token missing email field");
+        }
+
+        if(!identifier.equals(unVerifiedIdentifier))
+        {
+            throw new JWTVerificationException("email does not match with the email in jwt token!");
+        }
+
+        return identifier;
 
     }
 
