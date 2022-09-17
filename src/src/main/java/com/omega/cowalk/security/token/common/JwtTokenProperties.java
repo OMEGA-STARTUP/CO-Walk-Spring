@@ -1,4 +1,4 @@
-package com.omega.cowalk.security.token;
+package com.omega.cowalk.security.token.common;
 
 public interface JwtTokenProperties {
     String HEADER_PREFIX = "Bearer ";

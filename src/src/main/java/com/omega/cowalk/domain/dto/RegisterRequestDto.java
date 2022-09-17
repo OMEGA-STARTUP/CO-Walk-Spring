@@ -1,5 +1,7 @@
 package com.omega.cowalk.domain.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 import javax.validation.constraints.*;
@@ -8,6 +10,7 @@ import javax.validation.constraints.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class RegisterRequestDto {
 
     @NotNull(message = "identifier should not be null")
@@ -28,6 +31,6 @@ public class RegisterRequestDto {
     private String nickname;
 
     @NotNull(message = "jwt_token should not be null!")
-    private String jwt_token;
+    private String jwtToken;
 
 }

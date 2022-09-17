@@ -1,5 +1,6 @@
 package com.omega.cowalk.domain.entity.soundhistory;
 
+import com.omega.cowalk.domain.entity.backgroundsound.BackgroundSound;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -7,9 +8,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class SoundHistoryPrimaryKey implements Serializable {
 
-    private long user_id;
+    private long userId;
 
-    private long sound_id;
+    private BackgroundSound backgroundSound;
 
-    private java.sql.Date listen_date;
+    private java.sql.Date listenDate;
 }

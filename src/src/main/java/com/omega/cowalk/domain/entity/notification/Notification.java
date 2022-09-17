@@ -8,27 +8,29 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
+
 @Entity
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
-@Getter
-@ToString
-@Table(name="notification")
+@Table(name = "notification")
 @Builder
+@Getter @ToString
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 public class Notification
 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="notification_id")
+    @Column(name = "notification_id")
     private final long notificationId;
 
-    @Column(name="title")
+    @Column(name = "title", nullable = false)
     private final String title;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private final String content;
 
-    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "notification", cascade = ALL, fetch = EAGER)
     public List<NotificationRead> notificationReads = new ArrayList<>();
 }

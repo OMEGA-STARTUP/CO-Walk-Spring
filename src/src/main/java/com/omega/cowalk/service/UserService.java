@@ -58,17 +58,17 @@ public class UserService {
 
     public boolean isNotDuplicateNickname( String nickname)
     {
-        return userRepository.isNotDuplicateNickname(nickname);
+        return userRepository.existsByNickname(nickname);
     }
 
     public boolean isNotDuplicateIdentifier(String identifier)
     {
-        return userRepository.isNotDuplicateIdentifier(identifier);
+        return userRepository.existsByIdentifier(identifier);
     }
 
     public boolean isNotDuplicateEmail(String email)
     {
-        return userRepository.isNotDuplicateEmail(email);
+        return userRepository.existsByEmail(email);
     }
 
 
@@ -88,7 +88,6 @@ public class UserService {
         userRepository.updateSoundImgUrl(soundBackgroundId, userId);
     }
 
-    @Transactional(readOnly = true)
     public GetUserProfileResponseDto getRecentSoundHistory(long userId, Pageable pageable)
     {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("user with id " + String.valueOf(userId) + " not found" ));
@@ -98,8 +97,8 @@ public class UserService {
         List<UserRecentHistory> userRecentHistories =
                 soundHistoryList.stream().map((soundHistory -> new UserRecentHistory(soundHistory))).collect(Collectors.toList());
 
-        return new GetUserProfileResponseDto(user.getNickname(), user.getProfileImgUrl(), user.getSoundNumb(),
-                user.getSoundBackgroundId(), userRecentHistories);
+        return new GetUserProfileResponseDto(user.getNickname(), user.getProfileImgUrl(),
+                user.getProfileBackgroundId(), userRecentHistories);
 
     }
 

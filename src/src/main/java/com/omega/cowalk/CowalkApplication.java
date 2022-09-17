@@ -24,7 +24,7 @@ public class CowalkApplication {
 //    @Profile("dev")
 //    public void initDefaultUser(){
 //        RegisterRequestDto registerRequestDto = new RegisterRequestDto(
-//                "user123", "user123!", "user123@naver.com", "user123", "test");
+//                "admin123", "admin123!", "admin123@naver.com", "admin123", "admintest");
 //        userService.createUser(registerRequestDto);
 //    }
 }

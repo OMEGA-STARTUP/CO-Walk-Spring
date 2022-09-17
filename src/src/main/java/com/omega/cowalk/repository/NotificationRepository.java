@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public interface NotificationRepository extends CrudRepository<Notification, Long>
 {
-    @Query("select n from Notification n where n.notificationId = :notificationId")
-    Optional<Notification> findByNotificationId(long notificationId);
 
     @Query("select new com.omega.cowalk.domain.dto.NotificationPageResponseDto(" +
             "n.notificationId, n.title, n.content, CASE WHEN (nr.userId = :userId) THEN true ELSE false END)" +

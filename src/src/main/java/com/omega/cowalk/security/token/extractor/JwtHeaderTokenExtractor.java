@@ -1,7 +1,7 @@
 package com.omega.cowalk.security.token.extractor;
 
 import com.omega.cowalk.security.exceptions.JwtNotFoundException;
-import com.omega.cowalk.security.token.JwtTokenProperties;
+import com.omega.cowalk.security.token.common.JwtTokenProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 

@@ -21,8 +21,6 @@ public class JwtTokenCreator implements TokenCreator {
                 .sign(Algorithm.HMAC512(key));
     }
 
-
-
     public String createTokenForSignUpSendRequest(String email, String access_code, String key, long expiredTime)
     {
         return JWT.create()

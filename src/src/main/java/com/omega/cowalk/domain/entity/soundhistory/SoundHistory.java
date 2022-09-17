@@ -6,36 +6,33 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
-@Getter
-@ToString
 @Table(name="sound_history")
 @Builder
+@Getter @ToString
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 @IdClass(SoundHistoryPrimaryKey.class)
 public class SoundHistory {
-    @Id
-    @Column(name = "user_id")
-    private final long user_id;
 
     @Id
-    @Column(name="sound_id")
-    private final long sound_id;
+    @Column(name = "user_id")
+    private final long userId;
+
+    @Id// FK를 PK로 사용할때 쓰는 애노테이션
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sound_id", referencedColumnName = "sound_id", updatable = false, insertable = false)
+    private final BackgroundSound backgroundSound;
 
     @Id
     @Column(name = "listen_date")
-    private final java.sql.Date listen_date;
+    private final java.sql.Date listenDate;
 
-    @Column(name="latest_listen_time")
-    private final java.sql.Time latest_listen_time;
+    @Column(name="latest_listen_time", nullable = false)
+    private final java.sql.Time latestListenTime;
 
-    @Column(name = "actual_play_time")
-    private final int actual_play_time;
+    @Column(name = "actual_play_time", nullable = false)
+    private final int actualPlayTime;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="sound_id", referencedColumnName= "sound_id", updatable = false, insertable = false)
-    private final BackgroundSound backgroundSound;
 
 
 }

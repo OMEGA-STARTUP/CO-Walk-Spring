@@ -1,5 +1,7 @@
 package com.omega.cowalk.domain.dto.GetUserProfileResponseDto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 import java.util.List;
@@ -9,15 +11,14 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GetUserProfileResponseDto
 {
     private final String nickname;
 
-    private final String profile_img_url;
+    private final String profileImgUrl;
 
-    private final int sound_count;
-
-    private final long profile_background_id;
+    private final long profileBackgroundId;
 
     private final List<UserRecentHistory> userRecentHistories;
 

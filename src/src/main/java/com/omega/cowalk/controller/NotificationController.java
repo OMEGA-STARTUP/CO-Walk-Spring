@@ -11,6 +11,7 @@ import com.omega.cowalk.service.NotificationService;
 import com.omega.cowalk.util.SuccessResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

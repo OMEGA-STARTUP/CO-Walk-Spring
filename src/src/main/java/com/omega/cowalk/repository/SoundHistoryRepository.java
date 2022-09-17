@@ -14,9 +14,6 @@ import java.util.List;
 
 public interface SoundHistoryRepository extends CrudRepository<SoundHistory, SoundHistoryPrimaryKey> {
 
-    //@Query(value = "SELECT DISTINCT ON(sound_id) * FROM Sound_History WHERE user_id = :userId ORDER BY sound_id, listen_date DESC, latest_listen_time DESC", nativeQuery = true)
-    //@Procedure(procedureName = "getRecentHistory")
-
     @Query(value = "SELECT * FROM user_recent_sound_history WHERE user_id = :userId", nativeQuery = true)
-    public Page<SoundHistory> getCurrentSoundHistory(@Param("userId") Long userId, Pageable pages);
+    Page<SoundHistory> getCurrentSoundHistory(@Param("userId") Long userId, Pageable pages);
 }

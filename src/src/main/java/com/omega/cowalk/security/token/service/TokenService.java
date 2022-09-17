@@ -10,7 +10,7 @@ import com.omega.cowalk.security.auth.PrincipalUserDetails;
 import com.omega.cowalk.security.exceptions.InvalidAccessCodeException;
 import com.omega.cowalk.security.exceptions.JwtMalformedException;
 import com.omega.cowalk.security.exceptions.JwtNotFoundException;
-import com.omega.cowalk.security.token.JwtTokenProperties;
+import com.omega.cowalk.security.token.common.JwtTokenProperties;
 import com.omega.cowalk.security.token.creator.TokenCreator;
 import com.omega.cowalk.security.token.extractor.TokenExtractor;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TokenService {
 
-    @Value("${cloud.aws.credentials.secret-key}")
+    @Value("${jwt-token.secret-key}")
     private String SECRET_KEY;
-    @Value("${cloud.aws.credentials.access-key}")
+    @Value("${jwt-token.refresh-key}")
     private String REFRESH_KEY;
-
 
     private final PasswordEncoder passwordEncoder;
     private final TokenCreator jwtTokenCreator;
@@ -121,7 +120,7 @@ public class TokenService {
         log.debug("비번 새로 생성 코드 체크후 토큰 발급");
         String jwtSendCodeToken = jwtTokenCreator.createTokenForPasswordCheckRequest(
                 identifier, SECRET_KEY,
-                JwtTokenProperties.PASSWORD_SEND_REQUEST_TOKEN_EXPIRED_TIME);
+                JwtTokenProperties.PASSWORD_CHECK_REQUEST_TOKEN_EXPIRED_TIME);
 
         return JwtTokenProperties.HEADER_PREFIX + jwtSendCodeToken;
     }

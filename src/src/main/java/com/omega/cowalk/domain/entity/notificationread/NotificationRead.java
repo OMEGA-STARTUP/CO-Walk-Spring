@@ -6,12 +6,11 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
-@Getter
-@ToString
 @Table(name="notification_read")
 @Builder
+@Getter @ToString
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 @IdClass(NotificationReadPrimaryKey.class)
 public class NotificationRead
 {

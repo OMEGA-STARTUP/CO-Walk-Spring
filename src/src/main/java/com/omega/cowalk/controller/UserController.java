@@ -39,8 +39,6 @@ public class UserController {
     private final UserService userService;
     private final PictureUploader pictureUploader;
 
-
-
     @PostMapping("/register/email/send")
     public ResponseEntity<SuccessResult> sendEmailCode(@Valid @RequestBody RegisterSendCodeRequestDto registerSendCodeRequestDto){
         log.debug("sendMailCode is called!");
@@ -76,7 +74,7 @@ public class UserController {
     public ResponseEntity<SuccessResult> checkCode(@Valid @RequestBody RegisterCheckCodeRequestDto registerCheckCodeRequestDto)
     {
         String sendCodeToken = registerCheckCodeRequestDto.getJwtToken();
-        String access_code = registerCheckCodeRequestDto.getUser_access_code();
+        String access_code = registerCheckCodeRequestDto.getUserAccessCode();
 
         String email = tokenService.verifySignUpEmailSendCodeToken(sendCodeToken, access_code);
 
@@ -90,7 +88,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto)
     {
-        String token = registerRequestDto.getJwt_token();
+        String token = registerRequestDto.getJwtToken();
         tokenService.verifySignUpEmailCheckCodeToken(token , registerRequestDto.getEmail());
 
         if(!userService.isNotDuplicateNickname(registerRequestDto.getNickname()))
@@ -160,7 +158,7 @@ public class UserController {
                                    Authentication authentication)
     {
         long userId = ((PrincipalUserDetails) authentication.getPrincipal()).getUser().getId();
-        userService.updateSoundPicture(soundPictureUpdateRequestDto.getSound_background_id(), userId);
+        userService.updateSoundPicture(soundPictureUpdateRequestDto.getSoundBackgroundId(), userId);
     }
 
     @GetMapping("/profile")
@@ -225,8 +223,8 @@ public class UserController {
     public ResponseEntity<CheckCodeForPasswordResponseDto> checkCodeForPassword
             (@Valid @RequestBody CheckCodeForPasswordRequestDto checkCodeForPasswordRequestDto)
     {
-        String user_access_code = checkCodeForPasswordRequestDto.getUser_access_code();
-        String old_jwt_token = checkCodeForPasswordRequestDto.getJwt_token();
+        String user_access_code = checkCodeForPasswordRequestDto.getUserAccessCode();
+        String old_jwt_token = checkCodeForPasswordRequestDto.getJwtToken();
 
         String identifier = tokenService.verifyPasswordEmailSendCodeToken(old_jwt_token, user_access_code);
 

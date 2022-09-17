@@ -1,5 +1,7 @@
 package com.omega.cowalk.domain.dto.GetUserProfileResponseDto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.omega.cowalk.domain.entity.soundhistory.SoundHistory;
 import lombok.*;
 
@@ -8,25 +10,26 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserRecentHistory
 {
-    private final long sound_id;
+    private final long soundId;
 
-    private final String sound_name;
+    private final String soundName;
 
-    private final String sound_img_url;
+    private final String soundImgUrl;
 
-    private final String latest_listen_time;
+    private final String latestListenTime;
 
-    private final int actual_play_time;
+    private final int actualPlayTime;
 
     public UserRecentHistory(SoundHistory soundHistory)
     {
-        this.sound_id = soundHistory.getSound_id();
-        this.sound_name = soundHistory.getBackgroundSound().getSoundName();
-        this.sound_img_url = soundHistory.getBackgroundSound().getSoundImgUrl();
-        this.latest_listen_time = soundHistory.getLatest_listen_time().toString();
-        this.actual_play_time = soundHistory.getActual_play_time();
+        this.soundId = soundHistory.getBackgroundSound().getSoundId();
+        this.soundName = soundHistory.getBackgroundSound().getSoundName();
+        this.soundImgUrl = soundHistory.getBackgroundSound().getSoundImgUrl();
+        this.latestListenTime = soundHistory.getLatestListenTime().toString();
+        this.actualPlayTime = soundHistory.getActualPlayTime();
 
     }
 }

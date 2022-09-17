@@ -3,7 +3,7 @@ package com.omega.cowalk.security.filter;
 import com.omega.cowalk.repository.UserRepository;
 import com.omega.cowalk.security.auth.PrincipalUserDetails;
 import com.omega.cowalk.security.token.JwtAuthenticationToken;
-import com.omega.cowalk.security.token.JwtTokenProperties;
+import com.omega.cowalk.security.token.common.JwtTokenProperties;
 import com.omega.cowalk.security.token.service.TokenService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

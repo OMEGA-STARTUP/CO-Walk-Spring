@@ -2,7 +2,7 @@ package com.omega.cowalk.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.omega.cowalk.security.auth.PrincipalUserDetails;
-import com.omega.cowalk.security.token.JwtTokenProperties;
+import com.omega.cowalk.security.token.common.JwtTokenProperties;
 import com.omega.cowalk.security.token.dto.JwtTokenIssueDto;
 import com.omega.cowalk.security.token.service.TokenService;
 import com.omega.cowalk.util.SuccessResult;
