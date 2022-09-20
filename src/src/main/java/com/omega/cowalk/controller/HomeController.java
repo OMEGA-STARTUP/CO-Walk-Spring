@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @GetMapping
-    public String home(){
-        return "home";
+    public String healthCheck(){
+        return "health status: UP";
     }
 }
