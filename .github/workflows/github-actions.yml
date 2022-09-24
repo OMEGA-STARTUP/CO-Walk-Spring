@@ -39,7 +39,9 @@ jobs:
       shell: bash
     # Gradle 빌드
     - name: Build with Gradle
-      run: ./src/gradlew bootJar
+      run: |
+        cd ./src
+        ./gradlew bootJar
     # Spring 어플리케이션 Docker Image 빌드
     - name: Build Docker Image For Spring
       run: |
