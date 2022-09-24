@@ -1,0 +1,70 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'java'
+}
+
+group = 'com.omega'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //postgresql jsonb
+    implementation 'com.vladmihalcea:hibernate-types-52:2.4.2'
+    implementation 'org.hibernate:hibernate-core'
+
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
+
+    // jsypt 암호화 라이브러리
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+    // AWS
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation 'com.amazonaws:aws-java-sdk-ses'
+    implementation 'software.amazon.awssdk:core:2.17.258'
+    implementation 'software.amazon.awssdk:protocol-core'
+    implementation platform('software.amazon.awssdk:bom:2.10.86')
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+
+    implementation 'software.amazon.awssdk:ssm:2.16.2'
+    implementation 'software.amazon.awssdk:s3'
+    
+    //Firebase
+    implementation 'com.google.firebase:firebase-admin:9.0.0'
+
+
+
+    // JWT
+    implementation 'com.auth0:java-jwt:4.0.0'
+    implementation 'org.projectlombok:lombok:1.18.20'
+    compileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    // https://mvnrepository.com/artifact/org.springframework/spring-mock
+    testImplementation 'org.springframework:spring-mock:2.0.8'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
