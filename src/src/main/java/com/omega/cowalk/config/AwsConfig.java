@@ -24,6 +24,7 @@ public class AwsConfig {
         return new BasicAWSCredentials(accessKey, privateKey);
     }
 
+
     @Bean
     software.amazon.awssdk.auth.credentials.AwsCredentials getAwsCred(){
         return AwsBasicCredentials.create(accessKey, privateKey);
