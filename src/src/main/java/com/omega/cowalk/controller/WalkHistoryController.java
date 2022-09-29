@@ -25,10 +25,10 @@ public class WalkHistoryController {
     // 특정 월에 해당하는 발걸음 히스토리 조회 -> 디폴트 값은 현재 달임
     @GetMapping
     public ResponseEntity<SuccessResult> getWalkHistories(
-            @RequestParam("month") Optional<Integer> month,
+            @RequestParam(name = "month", required = false) String month,
             @AuthenticationPrincipal PrincipalUserDetails principalUserDetails){
 
-        String unboxedMonth = String.valueOf(month.orElse(LocalDate.now().getMonthValue()));
+        String unboxedMonth = month.isBlank() ? LocalDate.now().getMonth().toString() : month;
         List<WalkHistoryResponseDto> walkHistoryResponseDtos =
                 walkHistoryService.findByUserId(unboxedMonth, principalUserDetails.getUser().getId());
 

@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TokenController {
 
     private final TokenService tokenService;
-    private final UserService userService;
 
     @GetMapping("/re-issue")
     public ResponseEntity<SuccessResult> reIssueAccessToken(

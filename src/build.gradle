@@ -61,8 +61,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    // https://mvnrepository.com/artifact/org.springframework/spring-mock
-    testImplementation 'org.springframework:spring-mock:2.0.8'
 }
 
 tasks.named('test') {

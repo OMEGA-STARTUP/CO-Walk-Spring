@@ -23,7 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Profile(value = { "dev", "prod" })
 public class SecurityConfig {
 
     private static final String[] ANONYMOUS_AUTH_ENTRY_POINT = {
