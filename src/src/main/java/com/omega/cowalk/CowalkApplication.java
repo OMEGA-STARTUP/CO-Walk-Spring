@@ -11,14 +11,4 @@ public class CowalkApplication {
         SpringApplication.run(CowalkApplication.class, args);
     }
 
-//    @Autowired
-//    private UserService userService;
-//
-//    @PostConstruct
-//    @Profile("dev")
-//    public void initDefaultUser(){
-//        RegisterRequestDto registerRequestDto = new RegisterRequestDto(
-//                "admin123", "admin123!", "admin123@naver.com", "admin123", "admintest");
-//        userService.createUser(registerRequestDto);
-//    }
 }
