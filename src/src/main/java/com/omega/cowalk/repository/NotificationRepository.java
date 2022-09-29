@@ -12,16 +12,17 @@ public interface NotificationRepository extends CrudRepository<Notification, Lon
 {
 
     @Query("select new com.omega.cowalk.domain.dto.NotificationPageResponseDto(" +
-            "n.notificationId, n.title, n.content, CASE WHEN (nr.userId = :userId) THEN true ELSE false END)" +
-            " from Notification n" +
-            " left join NotificationRead nr on n.notificationId = nr.notificationId" +
-            " where nr.userId = :userId or nr.userId is null")
+            " n.notificationId, n.title, n.content," +
+            " (exists (select nr from NotificationRead nr where nr.userId = :userId and n.notificationId = nr.notificationId))" +
+            ")" +
+            " from Notification n")
     List<NotificationPageResponseDto> findNotificationInfosByUserId(long userId);
 
     @Query("select new com.omega.cowalk.domain.dto.NotificationPageResponseDto(" +
-            " n.notificationId, n.title, n.content, CASE WHEN (nr.userId = :userId) THEN true ELSE false END)" +
+            " n.notificationId, n.title, n.content," +
+            " (exists (select nr from NotificationRead nr where nr.userId = :userId and n.notificationId = :notificationId))" +
+            ")" +
             " from Notification n" +
-            " left join NotificationRead nr on n.notificationId = nr.notificationId" +
-            " where n.notificationId = :notificationId and nr.userId = :userId")
+            " where n.notificationId = :notificationId")
     Optional<NotificationPageResponseDto> findNotificationInfoByUserId(long userId, long notificationId);
 }
