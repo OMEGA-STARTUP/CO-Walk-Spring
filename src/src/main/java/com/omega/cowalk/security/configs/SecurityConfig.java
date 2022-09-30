@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private static final String[] ANONYMOUS_AUTH_ENTRY_POINT = {
-            "/", "/token/re-issue", "/user/login", "/user/register/**", "/user/id-inquiry/**", "/user/pw-inquiry/**", "/user/password/**"
+            "/spring/health-check", "/token/re-issue", "/user/login", "/user/register/**", "/user/id-inquiry/**", "/user/pw-inquiry/**", "/user/password/**"
     };
 
     private final AuthenticationSuccessHandler jwtAuthenticationSuccessHandler;

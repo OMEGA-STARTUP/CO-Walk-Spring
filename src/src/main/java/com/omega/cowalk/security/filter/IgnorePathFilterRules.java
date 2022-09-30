@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class IgnorePathFilterRules
 {
     List<String> authenticationIgnorePaths = List.of(
-            "/", "/token/re-issue", "/user/login", "/user/register/**", "/user/id-inquiry/**", "/user/pw-inquiry/**", "/user/password/**");
+            "/spring/health-check", "/token/re-issue", "/user/login", "/user/register/**", "/user/id-inquiry/**", "/user/pw-inquiry/**", "/user/password/**");
 
     List<String> authorizationIgnorePaths = List.of(
-            "/", "/token/re-issue", "/user/login", "/user/register/**", "/user/id-inquiry/**", "/user/pw-inquiry/**", "/user/password/**");
+            "/spring/health-check", "/token/re-issue", "/user/login", "/user/register/**", "/user/id-inquiry/**", "/user/pw-inquiry/**", "/user/password/**");
 
     Map< Class<? extends Filter>, List<AntPathRequestMatcher>> ignoreMap;
 
